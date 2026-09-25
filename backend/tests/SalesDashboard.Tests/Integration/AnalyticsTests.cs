@@ -1,7 +1,7 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using SalesDashboard.Api.Abstractions.Services;
+using SalesDashboard.Application.Abstractions.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +12,8 @@ using SalesDashboard.DataAccess.Abstractions.Services;
 using SalesDashboard.DataAccess.Data;
 using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.DataAccess.Domain;
-using SalesDashboard.Api.Features.Analytics;
-using SalesDashboard.Api.Features.Sales;
+using SalesDashboard.Application.Features.Analytics;
+using SalesDashboard.Application.Features.Sales;
 using SalesDashboard.DataAccess.Infrastructure;
 using Testcontainers.PostgreSql;
 
@@ -212,3 +212,4 @@ public sealed class AnalyticsTests
         }
     }
 }
+

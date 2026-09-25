@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using SalesDashboard.Api.Abstractions.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesDashboard.Application.Abstractions.Services;
 using SalesDashboard.DataAccess.Data;
 using SalesDashboard.DataAccess.Domain;
-using SalesDashboard.Api.Features.Analytics;
+using SalesDashboard.Application.Features.Analytics;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Api.Features.Sales;
+namespace SalesDashboard.Application.Features.Sales;
 
 public sealed record CustomerDto(int Id, string Name, string Company, string Segment);
 public sealed record SaleItemDto(int ProductId, string ProductName, int Quantity, string UnitPrice, string UnitCost);
@@ -15,10 +15,10 @@ public sealed record SalesDto(PeriodDto Period, string Currency, int Limit, Sale
 
 internal sealed class SalesService(SalesDbContext db) : ISalesService
 {
-    /// <summary>Возвращает последние продажи с позициями за выбранный период.</summary>
+    /// <summary>Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРёРµ РїСЂРѕРґР°Р¶Рё СЃ РїРѕР·РёС†РёСЏРјРё Р·Р° РІС‹Р±СЂР°РЅРЅС‹Р№ РїРµСЂРёРѕРґ.</summary>
     public async Task<SalesDto> GetAsync(DateRange range, int limit, CancellationToken ct)
     {
-        if (limit is < 1 or > 100) throw new RequestValidationException("limit", "Допустимы значения от 1 до 100.");
+        if (limit is < 1 or > 100) throw new RequestValidationException("limit", "Р”РѕРїСѓСЃС‚РёРјС‹ Р·РЅР°С‡РµРЅРёСЏ РѕС‚ 1 РґРѕ 100.");
         var sales = await db.Sales.AsNoTracking().Where(s => s.SoldAt >= range.StartUtc && s.SoldAt < range.EndUtc)
             .OrderByDescending(s => s.SoldAt).ThenByDescending(s => s.Id).Take(limit)
             .Select(s => new
@@ -34,3 +34,4 @@ internal sealed class SalesService(SalesDbContext db) : ISalesService
             s.Items.Select(i => new SaleItemDto(i.ProductId, i.Name, i.Quantity, Money.Format(i.UnitPrice), Money.Format(i.UnitCost))).ToArray())).ToArray());
     }
 }
+

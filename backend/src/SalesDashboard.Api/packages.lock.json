@@ -221,6 +221,12 @@
           "System.Composition.Runtime": "9.0.0"
         }
       },
+      "salesdashboard.application": {
+        "type": "Project",
+        "dependencies": {
+          "SalesDashboard.DataAccess": "[1.0.0, )"
+        }
+      },
       "salesdashboard.dataaccess": {
         "type": "Project",
         "dependencies": {

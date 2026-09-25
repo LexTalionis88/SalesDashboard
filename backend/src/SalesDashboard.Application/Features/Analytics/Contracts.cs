@@ -1,7 +1,7 @@
-using System.Globalization;
+﻿using System.Globalization;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Api.Features.Analytics;
+namespace SalesDashboard.Application.Features.Analytics;
 
 internal static class Money
 {
@@ -36,3 +36,4 @@ internal sealed record Metrics(decimal Revenue, decimal Cost, long SalesCount)
     internal ChangeDto ChangeFrom(Metrics other) => new(PercentChange(Revenue, other.Revenue), PercentChange(GrossProfit, other.GrossProfit),
         PercentChange(SalesCount, other.SalesCount), PercentChange(AverageCheck, other.AverageCheck), (Margin - other.Margin) * 100);
 }
+

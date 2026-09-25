@@ -1,6 +1,6 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using SalesDashboard.DataAccess.Data.Seed;
-using SalesDashboard.Api.Features.Analytics;
+using SalesDashboard.Application.Features.Analytics;
 using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Tests.Unit;
@@ -111,3 +111,4 @@ public sealed class FixedClock(DateTimeOffset now) : TimeProvider
 {
     public override DateTimeOffset GetUtcNow() => now;
 }
+

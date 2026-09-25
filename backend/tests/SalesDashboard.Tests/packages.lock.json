@@ -604,6 +604,13 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "[10.0.12, )",
+          "SalesDashboard.Application": "[1.0.0, )",
+          "SalesDashboard.DataAccess": "[1.0.0, )"
+        }
+      },
+      "salesdashboard.application": {
+        "type": "Project",
+        "dependencies": {
           "SalesDashboard.DataAccess": "[1.0.0, )"
         }
       },

@@ -1,4 +1,4 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 
@@ -17,3 +17,4 @@ internal sealed class QueryCapture : DbCommandInterceptor
         return ValueTask.FromResult(result);
     }
 }
+

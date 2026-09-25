@@ -1,18 +1,18 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SalesDashboard.Api.Abstractions.Services;
+using SalesDashboard.Application.Abstractions.Services;
 using SalesDashboard.DataAccess.Abstractions.Services;
 using SalesDashboard.DataAccess.Data;
-using SalesDashboard.Api.Features.Analytics;
-using SalesDashboard.Api.Features.Sales;
+
+
 using SalesDashboard.DataAccess.Infrastructure;
+using SalesDashboard.Application.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSalesDataAccess(builder.Configuration);
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
-builder.Services.AddScoped<ISalesService, SalesService>();
+builder.Services.AddSalesApplication();
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
@@ -29,7 +29,7 @@ app.MapGet("/api/sales", async ([FromQuery] string? from, [FromQuery] string? to
 {
     var parsedLimit = 20;
     if (limit is not null && !int.TryParse(limit, NumberStyles.None, CultureInfo.InvariantCulture, out parsedLimit))
-        throw new RequestValidationException("limit", "Требуется целое число от 1 до 100.");
+        throw new RequestValidationException("limit", "РўСЂРµР±СѓРµС‚СЃСЏ С†РµР»РѕРµ С‡РёСЃР»Рѕ РѕС‚ 1 РґРѕ 100.");
     return await sales.GetAsync(DateRange.Parse(from, to, preset, clock), parsedLimit, ct);
 }).WithName("GetSales").ProducesValidationProblem().ProducesProblem(500);
 app.MapGet("/api/health/ready", async (SalesDbContext db, CancellationToken ct) =>
@@ -41,3 +41,4 @@ if (!EF.IsDesignTime)
 }
 app.Run();
 public partial class Program;
+

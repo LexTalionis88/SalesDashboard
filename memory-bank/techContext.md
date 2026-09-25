@@ -18,3 +18,5 @@ C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; Postg
 - Временные изображения PDF находятся в `tmp/pdfs`, каталог игнорируется Git и не является частью поставки.
 
 Будущая команда запуска по ТЗ: `docker compose up --build`. Проверка backend-запуска описана в docs/backend-validation.md; полный UI ещё не реализован. Архитектурные предложения — `docs/architecture.md`.
+
+- ����������� backend: SalesDashboard.Api -> SalesDashboard.Application -> SalesDashboard.DataAccess; ������-������ ����������� � Application.

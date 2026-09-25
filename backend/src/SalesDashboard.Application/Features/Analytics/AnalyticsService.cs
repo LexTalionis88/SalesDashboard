@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using SalesDashboard.Api.Abstractions.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesDashboard.Application.Abstractions.Services;
 using SalesDashboard.DataAccess.Data;
 using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Api.Features.Analytics;
+namespace SalesDashboard.Application.Features.Analytics;
 
 internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
 {
@@ -23,11 +23,11 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
             .SingleOrDefaultAsync(ct) ?? new Metrics(0, 0, 0);
     }
 
-    /// <summary>Возвращает серверные KPI и аналитические срезы для выбранного периода.</summary>
+    /// <summary>Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРµСЂРІРµСЂРЅС‹Рµ KPI Рё Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРµ СЃСЂРµР·С‹ РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРµСЂРёРѕРґР°.</summary>
     public async Task<DashboardDto> GetAsync(DateRange range, string rankingBy, CancellationToken ct)
     {
         if (rankingBy is not ("grossProfit" or "averageCheck"))
-            throw new RequestValidationException("rankingBy", "Допустимы grossProfit и averageCheck.");
+            throw new RequestValidationException("rankingBy", "Р”РѕРїСѓСЃС‚РёРјС‹ grossProfit Рё averageCheck.");
 
         // Materialize only grouped results, never raw sales for dashboard calculations.
         var groups = await Totals(range).GroupBy(s => s.ManagerId)
@@ -82,3 +82,4 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         public decimal Cost { get; init; }
     }
 }
+

@@ -47,6 +47,7 @@
 - 2026-09-25: реализован frontend dashboard с реальными API на React, TypeScript, Vite, TanStack Query и Recharts; контейнер Nginx проксирует API. Успешны сборки npm и Docker, HTTP-проверка страницы и proxy. Встроенный браузер для визуальной проверки оказался недоступен.
 
 - 2026-09-25: по запросу «делай» добавлены браузерные E2E на NUnit и Playwright for .NET. Покрыты загрузка dashboard, смена периода/рейтинга, empty state, все пресеты, валидация дат, loading и повтор после ошибки API. Chromium установлен локально, 7/7 browser E2E проходят; полный solution прогон: Unit 25, Integration 12, E2E 8.
+- 2026-09-25: выполнена визуальная проверка dashboard локальным Chromium на 1440×900 и 390×844. Исправлено мобильное горизонтальное переполнение таблицы продаж, frontend пересобран и контейнер перезапущен.
 
 - 2026-09-25: по запросу «добавь поддержку open telemetry и прокинь трейсы» подключены OpenTelemetry 1.19, ASP.NET Core/HttpClient/EF Core instrumentation и OTLP exporter. В Compose добавлен Jaeger 1.57; проверены traces сервиса sales-dashboard-api со span HTTP и EF Core/SQL. Заодно исправлен Nginx proxy: backend переопределяется через Docker DNS без устаревшего IP после recreate.
 

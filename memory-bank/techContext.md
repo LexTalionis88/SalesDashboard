@@ -4,7 +4,7 @@
 
 ## Обязательная технологическая основа
 
-C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; PostgreSQL; Docker и Docker Compose. Точные версии и дополнительные библиотеки ещё не выбраны (D-10).
+C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; PostgreSQL; Docker и Docker Compose. Для v1 принята основа Vite + TanStack Query + Recharts и xUnit; точные версии и конкретный UI-набор ещё не выбраны (D-10, PARTIALLY ACCEPTED). Бизнес-правила и архитектурные решения по умолчанию приняты пользователем 2026-09-25; код пока отсутствует.
 
 ## Текущее окружение и артефакты
 

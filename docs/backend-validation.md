@@ -20,6 +20,7 @@
 - `GET http://localhost:3000/api/dashboard?from=2026-09-01&to=2026-09-25&rankingBy=grossProfit` — данные dashboard получены через Nginx proxy.
 - `GET http://localhost:3000/api/sales?from=2026-09-01&to=2026-09-25&limit=20` — 20 записей получены через Nginx proxy.
 - Jaeger `http://localhost:16686/api/services` показывает `sales-dashboard-api`; после запросов доступны traces со span HTTP и EF Core/SQL.
+- Чистый Compose smoke-test выполнен изолированным проектом с новыми volumes и отдельными портами: readiness 200, seed за 12 месяцев, frontend proxy и Jaeger traces работают. Временный проект и volumes удалены после проверки.
 
 ## Ограничения
 

@@ -49,3 +49,4 @@
 - Chromium установлен, браузерные frontend E2E проходят: 3/3. Полный прогон solution проходит: Unit 25, Integration 12, E2E 4.
 - Подключены OpenTelemetry 1.19 и OTLP exporter, instrumentation ASP.NET Core/HttpClient/EF Core; Compose добавляет Jaeger 1.57 на `localhost:16686`. После dashboard и sales запросов Jaeger показывает traces сервиса `sales-dashboard-api` с HTTP и EF Core spans.
 - Исправлен Nginx proxy на динамическое разрешение Docker DNS, чтобы пересоздание backend не приводило к 502 от frontend.
+- Выполнен чистый Compose smoke-test с новыми volumes в изолированном проекте: migrations/seed, readiness, frontend proxy и Jaeger проверены; временные контейнеры и volumes удалены.

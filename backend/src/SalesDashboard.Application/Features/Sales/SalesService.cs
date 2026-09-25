@@ -15,10 +15,10 @@ public sealed record SalesDto(PeriodDto Period, string Currency, int Limit, Sale
 
 internal sealed class SalesService(SalesDbContext db) : ISalesService
 {
-    /// <summary>Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРёРµ РїСЂРѕРґР°Р¶Рё СЃ РїРѕР·РёС†РёСЏРјРё Р·Р° РІС‹Р±СЂР°РЅРЅС‹Р№ РїРµСЂРёРѕРґ.</summary>
+    /// <summary>Возвращает последние продажи с позициями за выбранный период.</summary>
     public async Task<SalesDto> GetAsync(DateRange range, int limit, CancellationToken ct)
     {
-        if (limit is < 1 or > 100) throw new RequestValidationException("limit", "Р”РѕРїСѓСЃС‚РёРјС‹ Р·РЅР°С‡РµРЅРёСЏ РѕС‚ 1 РґРѕ 100.");
+        if (limit is < 1 or > 100) throw new RequestValidationException("limit", "Допустимы значения от 1 до 100.");
         var sales = await db.Sales.AsNoTracking().Where(s => s.SoldAt >= range.StartUtc && s.SoldAt < range.EndUtc)
             .OrderByDescending(s => s.SoldAt).ThenByDescending(s => s.Id).Take(limit)
             .Select(s => new

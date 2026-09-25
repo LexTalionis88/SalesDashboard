@@ -23,11 +23,11 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
             .SingleOrDefaultAsync(ct) ?? new Metrics(0, 0, 0);
     }
 
-    /// <summary>Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРµСЂРІРµСЂРЅС‹Рµ KPI Рё Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРµ СЃСЂРµР·С‹ РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРµСЂРёРѕРґР°.</summary>
+    /// <summary>Возвращает серверные KPI и аналитические срезы для выбранного периода.</summary>
     public async Task<DashboardDto> GetAsync(DateRange range, string rankingBy, CancellationToken ct)
     {
         if (rankingBy is not ("grossProfit" or "averageCheck"))
-            throw new RequestValidationException("rankingBy", "Р”РѕРїСѓСЃС‚РёРјС‹ grossProfit Рё averageCheck.");
+            throw new RequestValidationException("rankingBy", "Допустимы grossProfit и averageCheck.");
 
         // Materialize only grouped results, never raw sales for dashboard calculations.
         var groups = await Totals(range).GroupBy(s => s.ManagerId)

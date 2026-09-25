@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Bar, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { api } from '../shared/api/client'
 import type { Dashboard, Sale, SalesResponse } from '../shared/api/types'
+
+const SalesChart = lazy(() => import('./SalesChart'))
 
 type PeriodChoice = 'today' | 'last7Days' | 'last30Days' | 'thisMonth' | 'lastMonth' | 'custom'
 type Ranking = 'grossProfit' | 'averageCheck'
@@ -16,8 +17,6 @@ const formatMoney = (value: string | null) => value === null
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   })} ₽`
-const formatDate = (value: string) => new Date(`${value}T00:00:00`)
-  .toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' })
 const formatChange = (value: number | null) => value === null ? '—' : `${value > 0 ? '+' : ''}${value.toFixed(1)}%`
 const isoDate = (date: Date) => [
   date.getFullYear(),
@@ -189,12 +188,6 @@ function DashboardView({ data, rankingBy, setRankingBy }: {
   // Здесь только представление агрегированного DTO: бизнес-расчёты
   // выполняются на backend.
   const { kpis, comparison } = data
-  const chart = data.series.map(day => ({
-    date: formatDate(day.date),
-    revenue: Number(day.revenue),
-    profit: Number(day.grossProfit),
-    count: day.salesCount
-  }))
   const leader = data.ranking.find(row => row.manager.id === kpis.bestManager?.id)
   return <>
     <section className="kpis" aria-label="Ключевые показатели">
@@ -249,60 +242,9 @@ function DashboardView({ data, rankingBy, setRankingBy }: {
             <p className="muted">Выручка, прибыль и количество по дням</p>
           </div>
         </div>
-        <div
-          className="chart"
-          role="img"
-          aria-label="Ежедневная выручка, валовая прибыль и число продаж"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={chart}>
-              <CartesianGrid vertical={false} stroke="#eeedf4" />
-              <XAxis
-                dataKey="date"
-                minTickGap={24}
-                tick={{ fill: '#9ca3af', fontSize: 10 }}
-              />
-              <YAxis
-                yAxisId="money"
-                tick={{ fill: '#9ca3af', fontSize: 10 }}
-                width={45}
-              />
-              <YAxis
-                yAxisId="count"
-                orientation="right"
-                tick={{ fill: '#9ca3af', fontSize: 10 }}
-                width={30}
-              />
-              <Tooltip
-                formatter={(value, name) => name === 'Продажи'
-                  ? String(value)
-                  : formatMoney(String(value))}
-              />
-              <Bar
-                yAxisId="money"
-                dataKey="revenue"
-                name="Выручка"
-                fill="#8978e5"
-                radius={[3, 3, 0, 0]}
-              />
-              <Bar
-                yAxisId="money"
-                dataKey="profit"
-                name="Прибыль"
-                fill="#f2b26f"
-                radius={[3, 3, 0, 0]}
-              />
-              <Line
-                yAxisId="count"
-                dataKey="count"
-                name="Продажи"
-                stroke="#4bb99a"
-                dot={false}
-                strokeWidth={2}
-              />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
+        <Suspense fallback={<div className="loading">Загружаем график…</div>}>
+          <SalesChart series={data.series} />
+        </Suspense>
       </article>
       <article className="card best-card">
         <p className="eyebrow">ЛИДЕР ПЕРИОДА</p>

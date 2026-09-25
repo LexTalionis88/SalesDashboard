@@ -59,3 +59,5 @@
 - Все 45 backend-тестов прошли: 25 unit, 12 integration, 8 E2E.
 - Compose собран и запущен; readiness, API, frontend и Jaeger проверены.
 - Для production зафиксированы P0/P1-риски: dotnet-monitor без auth, dev-секреты, отсутствие auth/headers/rate limiting, telemetry exposure и крупный frontend bundle.
+
+- После аудита Recharts вынесен в lazy chunk: initial JS уменьшен с 639 KB до 266 KB, gzip с 189 KB до 82 KB; frontend build и 7 browser E2E проходят.

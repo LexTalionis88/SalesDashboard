@@ -49,6 +49,7 @@ Integration и backend E2E используют Testcontainers с PostgreSQL и 
 - [Решения](docs/decisions/open-decisions.md), [план проверки](docs/verification-plan.md), [memory bank](memory-bank/README.md).
 - [Руководство пользователя](docs/user-guide.md) — отдельная инструкция для работы с dashboard.
 - [QA-артефакты](docs/qa/README.md) — план, сценарии, матрица трассируемости, чек-лист и отчёт.
+- [CI/CD](docs/ci-cd.md) — GitHub Actions для проверок и публикации образов в GHCR.
 - [Frontend](frontend/README.md), [backend](backend/README.md), [история запросов](AI_PROMPTS.md).
 
 Авторизация, admin panel и production deployment не входят в текущую версию. В строках рейтинга нет сравнения с прошлым периодом; общие KPI сравниваются.

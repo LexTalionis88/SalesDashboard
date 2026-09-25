@@ -30,7 +30,8 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         var managerData = await LoadManagerDataAsync(range, rankingBy, ct);
         var series = await BuildSeriesAsync(range, ct);
         var categories = await LoadCategoriesAsync(range, ct);
-        var products = await LoadProductsAsync(range, ct);
+        var topProductsLimit = 5;
+        var products = await LoadProductsAsync(range, topProductsLimit, ct);
         var previous = await MetricsAsync(range.Previous, ct);
         return BuildDashboard(range, rankingBy, managerData, series, categories, products, previous);
     }
@@ -81,12 +82,12 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         return rows.Select(g => new CategoryDto(g.Id, g.Name, Money.Format(g.Revenue), Money.Format(g.Revenue - g.Cost), g.Count, g.Quantity)).ToArray();
     }
 
-    internal async Task<ProductDto[]> LoadProductsAsync(DateRange range, CancellationToken ct)
+    internal async Task<ProductDto[]> LoadProductsAsync(DateRange range, int topProductsLimit, CancellationToken ct)
     {
         var items = Paid(range).SelectMany(s => s.Items);
         var rows = await items.GroupBy(i => new { i.ProductId, i.Product.Name, i.Product.CategoryId })
             .Select(g => new { Id = g.Key.ProductId, Name = g.Key.Name, CategoryId = g.Key.CategoryId, Revenue = g.Sum(i => i.UnitPrice * i.Quantity), Profit = g.Sum(i => (i.UnitPrice - i.UnitCost) * i.Quantity), Count = g.Select(i => i.SaleId).Distinct().LongCount(), Quantity = g.Sum(i => (long)i.Quantity) })
-            .OrderByDescending(g => g.Profit).ThenBy(g => g.Id).Take(5).ToListAsync(ct);
+            .OrderByDescending(g => g.Profit).ThenBy(g => g.Id).Take(topProductsLimit).ToListAsync(ct);
         return rows.Select(g => new ProductDto(g.Id, g.Name, g.CategoryId, Money.Format(g.Revenue), Money.Format(g.Profit), g.Count, g.Quantity)).ToArray();
     }
 

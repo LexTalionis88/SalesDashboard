@@ -31,3 +31,5 @@
 - 2026-09-25: AnalyticsService.GetAsync разделён на валидацию, загрузку менеджеров, серию, категории, продукты и сборку DashboardDto; чистые этапы ValidateRanking и BuildDashboard доступны для unit-тестов.
 
 - 2026-09-25: методы AnalyticsService декомпозированы и переведены в internal; добавлены NUnit unit-тесты ValidateRanking и BuildDashboard, общий набор тестов вырос до 38.
+
+- 2026-09-25: константный Take(5) для top products заменён на Take(topProductsLimit), где limit передаётся в метод как переменная и параметризуется EF; Sales уже использовал Take(limit). Skip в backend отсутствует.

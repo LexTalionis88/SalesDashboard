@@ -1,6 +1,6 @@
 # API v1
 
-Реализован backend на .NET 10. Машиночитаемая схема доступна через `GET /openapi/v1.json`; её сохранённая копия — [openapi.json](openapi.json). Контракты задаются DTO в `backend/src/SalesDashboard.Api/Features/`.
+Реализован backend на .NET 10. Машиночитаемая схема доступна через `GET /openapi/v1.json`; её сохранённая копия — [openapi.json](openapi.json). Контракты задаются DTO в `backend/src/SalesDashboard.Application/Features/`.
 
 ## Общие правила
 

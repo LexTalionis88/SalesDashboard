@@ -99,13 +99,17 @@ Revenue/GrossProfit не хранить как независимые измен
 
 Критические проверки перечислены в [плане проверки](verification-plan.md). Наибольшие риски: неверная семантика статусов/периода, дублирование сумм при JOIN, разнородные данные разных периодов в UI, неидемпотентный seed и попытка уместить необязательные блоки в 8 часов. Решения и компромиссы — [open-decisions.md](decisions/open-decisions.md).
 
-## ������ backend
+## Сборки backend
 
-- SalesDashboard.Api � HTTP endpoints, ��������� ������ � composition root.
-- SalesDashboard.Application � ������-������� ��������� � ������, DTO � ���������� ��������.
-- SalesDashboard.DataAccess � EF Core, PostgreSQL, ��������, seed � �������� ��������.
+- SalesDashboard.Api — HTTP endpoints, обработка ошибок и composition root.
+- SalesDashboard.Application — бизнес-правила аналитики и продаж, DTO и интерфейсы сервисов.
+- SalesDashboard.DataAccess — EF Core, PostgreSQL, миграции, seed и доменные сущности.
 
-����������� ������������: Api -> Application -> DataAccess; �������� ������ ���.
+Направление зависимостей: Api -> Application -> DataAccess; обратных ссылок нет.
 
 
-HTTP-���� ���������� ������������� ASP.NET Core � SalesDashboard.Api/Controllers; Program.cs �������� composition root.
+HTTP-слой реализован контроллерами ASP.NET Core в SalesDashboard.Api/Controllers; Program.cs оставлен composition root.
+
+## Frontend
+
+React + TypeScript собирается Vite. TanStack Query управляет загрузкой и отменой запросов при смене периода и режима рейтинга. Recharts отображает ежедневную выручку и прибыль. Nginx в frontend-контейнере отдаёт статику и проксирует `/api` к backend, создавая единый origin для браузера. Значения KPI, сортировка рейтинга и денежные расчёты поступают из API.

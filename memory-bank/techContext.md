@@ -4,7 +4,7 @@
 
 ## Обязательная технологическая основа
 
-C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; PostgreSQL; Docker и Docker Compose. Для v1 принята основа Vite + TanStack Query + Recharts и NUnit для unit/integration/e2e по прямому указанию пользователя; точные версии и конкретный UI-набор ещё не выбраны (D-10, PARTIALLY ACCEPTED). Бизнес-правила и архитектурные решения по умолчанию приняты пользователем 2026-09-25; backend реализован.
+C#, .NET 10, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; PostgreSQL; Docker и Docker Compose. Frontend использует Vite, TanStack Query и Recharts; версии закреплены в package-lock.json. NUnit применяется для unit/integration/e2e backend. Бизнес-правила и архитектурные решения по умолчанию приняты пользователем 2026-09-25.
 
 ## Текущее окружение и артефакты
 
@@ -12,13 +12,13 @@ C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; Postg
 - На начало работы в папке находился только исходный PDF; локальных инструкций AGENTS.md не было.
 - Для чтения PDF использованы Python с pdfplumber и PyMuPDF/Pillow. Текст извлечён со всех 11 страниц, просмотрены три обзорных изображения страниц.
 - Добавлен AGENTS.md для следующих сессий; каталоги сохранены через `.gitkeep`.
-- Compose запускает PostgreSQL и .NET 10 backend на localhost:8080; frontend пока отсутствует.
-- Есть csproj, solution, lock-файлы backend, отдельная сборка `SalesDashboard.DataAccess`, Dockerfile и EF migration. .NET SDK 10.0.401 и Docker доступны; версии — ADR-001. Frontend package.json ещё отсутствует.
+- Compose запускает PostgreSQL, .NET 10 backend на localhost:8080, frontend на localhost:3000 и dotnet-monitor на localhost:52323.
+- Есть csproj, solution, lock-файлы backend, отдельные сборки Application/DataAccess, Dockerfile и EF migration. Frontend имеет package.json, package-lock.json и Dockerfile.
 - Локальный Git-репозиторий инициализирован 2026-09-25, ветка `main`. Материалы фиксируются тематическими коммитами на русском языке. Удалённый репозиторий не настроен, публикация не выполнялась.
 - Временные изображения PDF находятся в `tmp/pdfs`, каталог игнорируется Git и не является частью поставки.
 
-Будущая команда запуска по ТЗ: `docker compose up --build`. Проверка backend-запуска описана в docs/backend-validation.md; полный UI ещё не реализован. Архитектурные предложения — `docs/architecture.md`.
+Команда запуска: `docker compose up --build`. Dashboard доступен на localhost:3000. Архитектура описана в `docs/architecture.md`.
 
-- ����������� backend: SalesDashboard.Api -> SalesDashboard.Application -> SalesDashboard.DataAccess; ������-������ ����������� � Application.
+- Архитектура backend: SalesDashboard.Api -> SalesDashboard.Application -> SalesDashboard.DataAccess; бизнес-логика изолирована в Application.
 
-- Compose �������� sidecar dotnet-monitor:10 ��� ��������� ����������� ����� ����� /diag/port.sock; HTTP endpoint monitor � localhost:52323.
+- Compose включает sidecar dotnet-monitor:10 для локальной диагностики через общий /diag/port.sock; HTTP endpoint monitor — localhost:52323.

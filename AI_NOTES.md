@@ -20,26 +20,28 @@
 18. РџРѕ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРјСѓ Р·Р°РјРµС‡Р°РЅРёСЋ РёРЅС‚РµСЂС„РµР№СЃС‹ РїРµСЂРµРЅРµСЃРµРЅС‹ РёР· РєР°С‚Р°Р»РѕРіРѕРІ СЂРµР°Р»РёР·Р°С†РёР№ РІ РѕС‚РґРµР»СЊРЅС‹Р№ `Abstractions/Services`; namespaces, DI, С‚РµСЃС‚С‹ Рё РґРѕРєСѓРјРµРЅС‚Р°С†РёСЏ РѕР±РЅРѕРІР»РµРЅС‹.
 19. РџРѕ Р·Р°РїСЂРѕСЃСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃР»РѕР№ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј РІС‹РЅРµСЃРµРЅ РІ РѕС‚РґРµР»СЊРЅСѓСЋ СЃР±РѕСЂРєСѓ `SalesDashboard.DataAccess`; API СЃСЃС‹Р»Р°РµС‚СЃСЏ РЅР° РЅРµС‘ Р±РµР· РѕР±СЂР°С‚РЅРѕР№ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё, РјРёРіСЂР°С†РёРё РїРµСЂРµРЅР°СЃС‚СЂРѕРµРЅС‹ РЅР° СЌС‚Сѓ СЃР±РѕСЂРєСѓ.
 
-- 2026-09-25: бизнес-логика вынесена в SalesDashboard.Application; зависимости направлены Api -> Application -> DataAccess.
+- 2026-09-25: Р±РёР·РЅРµСЃ-Р»РѕРіРёРєР° РІС‹РЅРµСЃРµРЅР° РІ SalesDashboard.Application; Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РЅР°РїСЂР°РІР»РµРЅС‹ Api -> Application -> DataAccess.
 
-- 2026-09-25: HTTP endpoints переведены с Minimal API на контроллеры DashboardController, SalesController и HealthController; readiness предоставляется через IDatabaseReadiness.
+- 2026-09-25: HTTP endpoints РїРµСЂРµРІРµРґРµРЅС‹ СЃ Minimal API РЅР° РєРѕРЅС‚СЂРѕР»Р»РµСЂС‹ DashboardController, SalesController Рё HealthController; readiness РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚СЃСЏ С‡РµСЂРµР· IDatabaseReadiness.
 
-- 2026-09-25: в Compose добавлен sidecar mcr.microsoft.com/dotnet/monitor:10; backend и monitor используют общий diagnostic socket /diag/port.sock, endpoint monitor опубликован на localhost:52323.
+- 2026-09-25: РІ Compose РґРѕР±Р°РІР»РµРЅ sidecar mcr.microsoft.com/dotnet/monitor:10; backend Рё monitor РёСЃРїРѕР»СЊР·СѓСЋС‚ РѕР±С‰РёР№ diagnostic socket /diag/port.sock, endpoint monitor РѕРїСѓР±Р»РёРєРѕРІР°РЅ РЅР° localhost:52323.
 
-- 2026-09-25: проверена кодировка русских строк и XML-комментариев; исправлены mojibake в комментариях и сообщениях валидации сервисов Analytics/Sales.
+- 2026-09-25: РїСЂРѕРІРµСЂРµРЅР° РєРѕРґРёСЂРѕРІРєР° СЂСѓСЃСЃРєРёС… СЃС‚СЂРѕРє Рё XML-РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ; РёСЃРїСЂР°РІР»РµРЅС‹ mojibake РІ РєРѕРјРјРµРЅС‚Р°СЂРёСЏС… Рё СЃРѕРѕР±С‰РµРЅРёСЏС… РІР°Р»РёРґР°С†РёРё СЃРµСЂРІРёСЃРѕРІ Analytics/Sales.
 
-- 2026-09-25: AnalyticsService.GetAsync разделён на валидацию, загрузку менеджеров, серию, категории, продукты и сборку DashboardDto; чистые этапы ValidateRanking и BuildDashboard доступны для unit-тестов.
+- 2026-09-25: AnalyticsService.GetAsync СЂР°Р·РґРµР»С‘РЅ РЅР° РІР°Р»РёРґР°С†РёСЋ, Р·Р°РіСЂСѓР·РєСѓ РјРµРЅРµРґР¶РµСЂРѕРІ, СЃРµСЂРёСЋ, РєР°С‚РµРіРѕСЂРёРё, РїСЂРѕРґСѓРєС‚С‹ Рё СЃР±РѕСЂРєСѓ DashboardDto; С‡РёСЃС‚С‹Рµ СЌС‚Р°РїС‹ ValidateRanking Рё BuildDashboard РґРѕСЃС‚СѓРїРЅС‹ РґР»СЏ unit-С‚РµСЃС‚РѕРІ.
 
-- 2026-09-25: методы AnalyticsService декомпозированы и переведены в internal; добавлены NUnit unit-тесты ValidateRanking и BuildDashboard, общий набор тестов вырос до 38.
+- 2026-09-25: РјРµС‚РѕРґС‹ AnalyticsService РґРµРєРѕРјРїРѕР·РёСЂРѕРІР°РЅС‹ Рё РїРµСЂРµРІРµРґРµРЅС‹ РІ internal; РґРѕР±Р°РІР»РµРЅС‹ NUnit unit-С‚РµСЃС‚С‹ ValidateRanking Рё BuildDashboard, РѕР±С‰РёР№ РЅР°Р±РѕСЂ С‚РµСЃС‚РѕРІ РІС‹СЂРѕСЃ РґРѕ 38.
 
-- 2026-09-25: константный Take(5) для top products заменён на Take(topProductsLimit), где limit передаётся в метод как переменная и параметризуется EF; Sales уже использовал Take(limit). Skip в backend отсутствует.
+- 2026-09-25: РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ Take(5) РґР»СЏ top products Р·Р°РјРµРЅС‘РЅ РЅР° Take(topProductsLimit), РіРґРµ limit РїРµСЂРµРґР°С‘С‚СЃСЏ РІ РјРµС‚РѕРґ РєР°Рє РїРµСЂРµРјРµРЅРЅР°СЏ Рё РїР°СЂР°РјРµС‚СЂРёР·СѓРµС‚СЃСЏ EF; Sales СѓР¶Рµ РёСЃРїРѕР»СЊР·РѕРІР°Р» Take(limit). Skip РІ backend РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚.
 
-- 2026-09-25: SalesService.GetAsync разделён на ValidateLimit, LoadSalesAsync и BuildSalesDto; добавлены NUnit unit-тесты лимита и преобразования продаж.
+- 2026-09-25: SalesService.GetAsync СЂР°Р·РґРµР»С‘РЅ РЅР° ValidateLimit, LoadSalesAsync Рё BuildSalesDto; РґРѕР±Р°РІР»РµРЅС‹ NUnit unit-С‚РµСЃС‚С‹ Р»РёРјРёС‚Р° Рё РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РїСЂРѕРґР°Р¶.
 
-- 2026-09-25: BusinessRulesTests разделён на AnalyticsServiceTests, SalesServiceTests, DateRangeTests и SeedGeneratorTests; добавлен общий FixedClock.
+- 2026-09-25: BusinessRulesTests СЂР°Р·РґРµР»С‘РЅ РЅР° AnalyticsServiceTests, SalesServiceTests, DateRangeTests Рё SeedGeneratorTests; РґРѕР±Р°РІР»РµРЅ РѕР±С‰РёР№ FixedClock.
 
-- 2026-09-25: тесты разнесены по сборкам SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests; старый объединённый тестовый проект удалён из solution.
+- 2026-09-25: С‚РµСЃС‚С‹ СЂР°Р·РЅРµСЃРµРЅС‹ РїРѕ СЃР±РѕСЂРєР°Рј SalesDashboard.UnitTests, SalesDashboard.IntegrationTests Рё SalesDashboard.E2ETests; СЃС‚Р°СЂС‹Р№ РѕР±СЉРµРґРёРЅС‘РЅРЅС‹Р№ С‚РµСЃС‚РѕРІС‹Р№ РїСЂРѕРµРєС‚ СѓРґР°Р»С‘РЅ РёР· solution.
 
-- 2026-09-25: проверены каталоги backend без bin/obj; удалены пустые остаточные папки API Domain, Abstractions, Data и Features после выноса слоёв.
+- 2026-09-25: РїСЂРѕРІРµСЂРµРЅС‹ РєР°С‚Р°Р»РѕРіРё backend Р±РµР· bin/obj; СѓРґР°Р»РµРЅС‹ РїСѓСЃС‚С‹Рµ РѕСЃС‚Р°С‚РѕС‡РЅС‹Рµ РїР°РїРєРё API Domain, Abstractions, Data Рё Features РїРѕСЃР»Рµ РІС‹РЅРѕСЃР° СЃР»РѕС‘РІ.
 
-- 2026-09-25: Testcontainers проверены с доступом к Docker daemon: IntegrationTests 12/12, E2ETests 1/1; временные PostgreSQL контейнеры завершены тестовым lifecycle.
+- 2026-09-25: Testcontainers РїСЂРѕРІРµСЂРµРЅС‹ СЃ РґРѕСЃС‚СѓРїРѕРј Рє Docker daemon: IntegrationTests 12/12, E2ETests 1/1; РІСЂРµРјРµРЅРЅС‹Рµ PostgreSQL РєРѕРЅС‚РµР№РЅРµСЂС‹ Р·Р°РІРµСЂС€РµРЅС‹ С‚РµСЃС‚РѕРІС‹Рј lifecycle.
+
+- 2026-09-25: СЂРµР°Р»РёР·РѕРІР°РЅ frontend dashboard СЃ СЂРµР°Р»СЊРЅС‹РјРё API РЅР° React, TypeScript, Vite, TanStack Query Рё Recharts; РєРѕРЅС‚РµР№РЅРµСЂ Nginx РїСЂРѕРєСЃРёСЂСѓРµС‚ API. РЈСЃРїРµС€РЅС‹ СЃР±РѕСЂРєРё npm Рё Docker, HTTP-РїСЂРѕРІРµСЂРєР° СЃС‚СЂР°РЅРёС†С‹ Рё proxy. Р’СЃС‚СЂРѕРµРЅРЅС‹Р№ Р±СЂР°СѓР·РµСЂ РґР»СЏ РІРёР·СѓР°Р»СЊРЅРѕР№ РїСЂРѕРІРµСЂРєРё РѕРєР°Р·Р°Р»СЃСЏ РЅРµРґРѕСЃС‚СѓРїРµРЅ.

@@ -43,6 +43,14 @@ services:
       - diagnostics:/diag
     depends_on:
       - backend
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      - backend
 volumes:
   sales-data:
   diagnostics:

@@ -51,3 +51,11 @@
 - Подключены OpenTelemetry 1.19 и OTLP exporter, instrumentation ASP.NET Core/HttpClient/EF Core; Compose добавляет Jaeger 1.57 на `localhost:16686`. После dashboard и sales запросов Jaeger показывает traces сервиса `sales-dashboard-api` с HTTP и EF Core spans.
 - Исправлен Nginx proxy на динамическое разрешение Docker DNS, чтобы пересоздание backend не приводило к 502 от frontend.
 - Выполнен чистый Compose smoke-test с новыми volumes в изолированном проекте: migrations/seed, readiness, frontend proxy и Jaeger проверены; временные контейнеры и volumes удалены.
+
+
+## Аудит 2026-09-25
+
+- Полный аудит оформлен в docs/audits/full-audit.md.
+- Все 45 backend-тестов прошли: 25 unit, 12 integration, 8 E2E.
+- Compose собран и запущен; readiness, API, frontend и Jaeger проверены.
+- Для production зафиксированы P0/P1-риски: dotnet-monitor без auth, dev-секреты, отсутствие auth/headers/rate limiting, telemetry exposure и крупный frontend bundle.

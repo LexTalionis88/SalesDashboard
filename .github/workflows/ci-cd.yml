@@ -101,6 +101,8 @@ jobs:
     name: Browser E2E
     runs-on: ubuntu-latest
     needs: [frontend, backend]
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.playwright-browsers
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -118,8 +120,14 @@ jobs:
 
       - name: Install Chromium
         run: >-
-          pwsh backend/tests/SalesDashboard.E2ETests/bin/Debug/net10.0/.playwright/playwright.ps1
+          pwsh backend/tests/SalesDashboard.E2ETests/bin/Debug/net10.0/playwright.ps1
           install --with-deps chromium
+
+      - name: Verify Chromium installation
+        run: |
+          test -f backend/tests/SalesDashboard.E2ETests/bin/Debug/net10.0/playwright.ps1
+          test -d "$PLAYWRIGHT_BROWSERS_PATH"
+          test -n "$(find "$PLAYWRIGHT_BROWSERS_PATH" -maxdepth 2 -type d -name 'chromium-*' -print -quit)"
 
       - name: Start frontend and API
         run: docker compose up -d --build

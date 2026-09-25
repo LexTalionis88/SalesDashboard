@@ -14,7 +14,9 @@ CI запускается для каждого pull request, push в `main` и 
 3. Backend integration-тесты с PostgreSQL Testcontainers.
 4. Backend E2E-тесты.
 5. Compose smoke-test с readiness, API и frontend proxy.
-6. Browser E2E через Playwright и Chromium.
+6. Browser E2E через Playwright и Chromium. Скрипт установки берётся из
+   `bin/Debug/net10.0/playwright.ps1`, а browser cache явно задаётся через
+   `PLAYWRIGHT_BROWSERS_PATH`, чтобы путь установки совпадал с путём запуска.
 
 Для integration/E2E нужен Docker daemon. GitHub-hosted runner предоставляет
 Docker и доступ к Docker Hub для тестового PostgreSQL.

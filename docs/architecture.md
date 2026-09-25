@@ -106,3 +106,6 @@ Revenue/GrossProfit РЅРµ С…СЂР°РЅРёС‚СЊ РєР°Рє РЅРµР·Р°РІРёСЃРёРјС‹Рµ РёР·РјРµРЅ
 - SalesDashboard.DataAccess — EF Core, PostgreSQL, миграции, seed и доменные сущности.
 
 Направление зависимостей: Api -> Application -> DataAccess; обратных ссылок нет.
+
+
+HTTP-слой реализован контроллерами ASP.NET Core в SalesDashboard.Api/Controllers; Program.cs оставлен composition root.

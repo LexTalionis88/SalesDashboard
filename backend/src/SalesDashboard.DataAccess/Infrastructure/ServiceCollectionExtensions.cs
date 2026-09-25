@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<SalesDbContext>(options => options.UseNpgsql(
             configuration.GetConnectionString("Sales") ?? throw new InvalidOperationException("ConnectionStrings:Sales is required.")));
         services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+        services.AddScoped<IDatabaseReadiness, DatabaseReadiness>();
         return services;
     }
 }

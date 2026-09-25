@@ -24,3 +24,5 @@
 Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂРЅС‹Рµ С‚РµСЃС‚С‹ Рё frontend container/proxy. Р”РµР»СЊС‚Р° РІ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРµ СЂРµР№С‚РёРЅРіР° РїРѕРєР° РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚. Production deployment/Р°РІС‚РѕСЂРёР·Р°С†РёСЏ РІРЅРµ scope. РћР±С‰РёР№ С„Р°РєС‚РёС‡РµСЃРєРёР№ Р±СЋРґР¶РµС‚ 8 С‡Р°СЃРѕРІ РЅРµ РёР·РјРµСЂРµРЅ.
 
 - Бизнес-логика вынесена в отдельную сборку SalesDashboard.Application; интерфейсы находятся в Application/Abstractions/Services, реализации и DTO — в Application/Features.
+
+- Minimal API заменён на контроллеры DashboardController, SalesController и HealthController; проверка готовности использует IDatabaseReadiness.

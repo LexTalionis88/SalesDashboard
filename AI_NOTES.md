@@ -21,3 +21,5 @@
 19. РџРѕ Р·Р°РїСЂРѕСЃСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃР»РѕР№ РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј РІС‹РЅРµСЃРµРЅ РІ РѕС‚РґРµР»СЊРЅСѓСЋ СЃР±РѕСЂРєСѓ `SalesDashboard.DataAccess`; API СЃСЃС‹Р»Р°РµС‚СЃСЏ РЅР° РЅРµС‘ Р±РµР· РѕР±СЂР°С‚РЅРѕР№ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё, РјРёРіСЂР°С†РёРё РїРµСЂРµРЅР°СЃС‚СЂРѕРµРЅС‹ РЅР° СЌС‚Сѓ СЃР±РѕСЂРєСѓ.
 
 - 2026-09-25: бизнес-логика вынесена в SalesDashboard.Application; зависимости направлены Api -> Application -> DataAccess.
+
+- 2026-09-25: HTTP endpoints переведены с Minimal API на контроллеры DashboardController, SalesController и HealthController; readiness предоставляется через IDatabaseReadiness.

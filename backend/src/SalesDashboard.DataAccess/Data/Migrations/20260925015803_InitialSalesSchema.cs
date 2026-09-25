@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace SalesDashboard.Api.Data.Migrations
+namespace SalesDashboard.DataAccess.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialSalesSchema : Migration
@@ -225,3 +225,4 @@ namespace SalesDashboard.Api.Data.Migrations
         }
     }
 }
+

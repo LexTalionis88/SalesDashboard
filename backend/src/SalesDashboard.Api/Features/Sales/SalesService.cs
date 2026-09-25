@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using SalesDashboard.Api.Abstractions.Services;
-using SalesDashboard.Api.Data;
-using SalesDashboard.Api.Domain;
+using SalesDashboard.DataAccess.Data;
+using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.Api.Features.Analytics;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Api.Features.Sales;
 

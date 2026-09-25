@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SalesDashboard.Api.Data;
+using SalesDashboard.DataAccess.Data;
 
 #nullable disable
 
-namespace SalesDashboard.Api.Data.Migrations
+namespace SalesDashboard.DataAccess.Data.Migrations
 {
     [DbContext(typeof(SalesDbContext))]
     [Migration("20260925015803_InitialSalesSchema")]
@@ -25,7 +25,7 @@ namespace SalesDashboard.Api.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Category", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Customer", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Manager", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Manager", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.ToTable("Managers");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Product", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Sale", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Sale", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace SalesDashboard.Api.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.SaleItem", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.SaleItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,7 +223,7 @@ namespace SalesDashboard.Api.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.SeedRun", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.SeedRun", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,9 +245,9 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.ToTable("SeedRuns");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Product", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Product", b =>
                 {
-                    b.HasOne("SalesDashboard.Api.Domain.Category", "Category")
+                    b.HasOne("SalesDashboard.DataAccess.Domain.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -256,15 +256,15 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Sale", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Sale", b =>
                 {
-                    b.HasOne("SalesDashboard.Api.Domain.Customer", "Customer")
+                    b.HasOne("SalesDashboard.DataAccess.Domain.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SalesDashboard.Api.Domain.Manager", "Manager")
+                    b.HasOne("SalesDashboard.DataAccess.Domain.Manager", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -275,15 +275,15 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.SaleItem", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.SaleItem", b =>
                 {
-                    b.HasOne("SalesDashboard.Api.Domain.Product", "Product")
+                    b.HasOne("SalesDashboard.DataAccess.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SalesDashboard.Api.Domain.Sale", "Sale")
+                    b.HasOne("SalesDashboard.DataAccess.Domain.Sale", "Sale")
                         .WithMany("Items")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,7 +294,7 @@ namespace SalesDashboard.Api.Data.Migrations
                     b.Navigation("Sale");
                 });
 
-            modelBuilder.Entity("SalesDashboard.Api.Domain.Sale", b =>
+            modelBuilder.Entity("SalesDashboard.DataAccess.Domain.Sale", b =>
                 {
                     b.Navigation("Items");
                 });
@@ -302,3 +302,4 @@ namespace SalesDashboard.Api.Data.Migrations
         }
     }
 }
+

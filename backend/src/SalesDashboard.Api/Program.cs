@@ -2,17 +2,15 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SalesDashboard.Api.Abstractions.Services;
-using SalesDashboard.Api.Data;
-using SalesDashboard.Api.Data.Seed;
+using SalesDashboard.DataAccess.Abstractions.Services;
+using SalesDashboard.DataAccess.Data;
 using SalesDashboard.Api.Features.Analytics;
 using SalesDashboard.Api.Features.Sales;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<SalesDbContext>(options => options.UseNpgsql(
-    builder.Configuration.GetConnectionString("Sales") ?? throw new InvalidOperationException("ConnectionStrings:Sales is required.")));
+builder.Services.AddSalesDataAccess(builder.Configuration);
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<ISalesService, SalesService>();
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();

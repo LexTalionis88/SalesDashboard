@@ -1,7 +1,7 @@
 using System.Text.Json;
-using SalesDashboard.Api.Data.Seed;
+using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.Api.Features.Analytics;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Tests.Unit;
 

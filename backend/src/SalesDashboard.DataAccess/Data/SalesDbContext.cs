@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using SalesDashboard.Api.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesDashboard.DataAccess.Domain;
 
-namespace SalesDashboard.Api.Data;
+namespace SalesDashboard.DataAccess.Data;
 
 internal sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : DbContext(options)
 {
@@ -61,3 +61,4 @@ internal sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) :
         });
     }
 }
+

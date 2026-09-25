@@ -21,4 +21,6 @@ SDK на машине и в Docker: 10.0.401; runtime Docker: 10.0.12; EF Core/A
 
 Версии пакетов закреплены в csproj и packages.lock.json; локальный dotnet-ef — 10.0.12 в dotnet-tools.json. `global.json` допускает установленный feature band .NET 10 через latestFeature; контейнер сборки закреплён точнее.
 
+Слой доступа к данным выделен в отдельную сборку `SalesDashboard.DataAccess`. API зависит от неё; DataAccess не зависит от API. В DataAccess находятся DbContext, миграции, seed и доменная модель. Регистрация выполняется через публичное расширение `AddSalesDataAccess`, реализация инициализатора остаётся внутренней.
+
 Использованы официальные сведения о [Npgsql EF Core 10](https://www.npgsql.org/efcore/release-notes/10.0.html) и [запуске NUnit через dotnet test](https://docs.nunit.org/articles/nunit/getting-started/dotnet-core-and-dotnet-standard.html).

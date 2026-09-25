@@ -13,6 +13,7 @@
 - Dockerfile и Compose backend/БД; frontend не включён.
 - NUnit unit, integration и backend e2e. Тесты используют изолированные PostgreSQL-контейнеры.
 - Сервисы представлены интерфейсами `IAnalyticsService`, `ISalesService`, `IDatabaseInitializer` в отдельном каталоге `Abstractions/Services`; реализации и доменные сущности переведены во внутреннюю область видимости. Публичные методы интерфейсов и инфраструктурных контрактов имеют русские XML-комментарии.
+- Слой доступа к данным вынесен в отдельную сборку `SalesDashboard.DataAccess`; API ссылается на неё без обратной зависимости. DbContext, миграции, seed и доменная модель находятся в DataAccess.
 
 ## Проверки
 

@@ -1,5 +1,5 @@
 using System.Globalization;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Api.Features.Analytics;
 

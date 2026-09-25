@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/SalesDashboard.Api/SalesDashboard.Api.csproj" />
+    <Project Path="src/SalesDashboard.DataAccess/SalesDashboard.DataAccess.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/SalesDashboard.Tests/SalesDashboard.Tests.csproj" />

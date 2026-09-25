@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SalesDashboard.Api\SalesDashboard.Api.csproj" />
+    <ProjectReference Include="..\..\src\SalesDashboard.DataAccess\SalesDashboard.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

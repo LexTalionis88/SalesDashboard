@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0.401 AS build
 WORKDIR /src
 COPY backend/Directory.Build.props backend/Directory.Build.props
+COPY backend/src/SalesDashboard.DataAccess/ backend/src/SalesDashboard.DataAccess/
 COPY backend/src/SalesDashboard.Api/ backend/src/SalesDashboard.Api/
 RUN dotnet restore backend/src/SalesDashboard.Api --locked-mode
 RUN dotnet publish backend/src/SalesDashboard.Api -c Release --no-restore -o /app

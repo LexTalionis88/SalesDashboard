@@ -604,6 +604,12 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "[10.0.12, )",
+          "SalesDashboard.DataAccess": "[1.0.0, )"
+        }
+      },
+      "salesdashboard.dataaccess": {
+        "type": "Project",
+        "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "[10.0.12, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.3, )"
         }

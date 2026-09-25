@@ -13,7 +13,7 @@ C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; Postg
 - Для чтения PDF использованы Python с pdfplumber и PyMuPDF/Pillow. Текст извлечён со всех 11 страниц, просмотрены три обзорных изображения страниц.
 - Добавлен AGENTS.md для следующих сессий; каталоги сохранены через `.gitkeep`.
 - Compose запускает PostgreSQL и .NET 10 backend на localhost:8080; frontend пока отсутствует.
-- Есть csproj, solution, lock-файлы backend, Dockerfile и EF migration. .NET SDK 10.0.401 и Docker доступны; версии — ADR-001. Frontend package.json ещё отсутствует.
+- Есть csproj, solution, lock-файлы backend, отдельная сборка `SalesDashboard.DataAccess`, Dockerfile и EF migration. .NET SDK 10.0.401 и Docker доступны; версии — ADR-001. Frontend package.json ещё отсутствует.
 - Локальный Git-репозиторий инициализирован 2026-09-25, ветка `main`. Материалы фиксируются тематическими коммитами на русском языке. Удалённый репозиторий не настроен, публикация не выполнялась.
 - Временные изображения PDF находятся в `tmp/pdfs`, каталог игнорируется Git и не является частью поставки.
 

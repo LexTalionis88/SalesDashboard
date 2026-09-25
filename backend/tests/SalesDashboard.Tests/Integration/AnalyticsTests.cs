@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using SalesDashboard.Api.Data;
-using SalesDashboard.Api.Data.Seed;
-using SalesDashboard.Api.Domain;
+using SalesDashboard.DataAccess.Abstractions.Services;
+using SalesDashboard.DataAccess.Data;
+using SalesDashboard.DataAccess.Data.Seed;
+using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.Api.Features.Analytics;
 using SalesDashboard.Api.Features.Sales;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 using Testcontainers.PostgreSql;
 
 namespace SalesDashboard.Tests.Integration;

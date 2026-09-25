@@ -1,4 +1,4 @@
-namespace SalesDashboard.Api.Domain;
+﻿namespace SalesDashboard.DataAccess.Domain;
 
 internal enum SaleStatus { Paid, Cancelled, Refunded }
 
@@ -67,3 +67,4 @@ internal sealed class SeedRun
     public int RandomSeed { get; set; }
     public DateOnly AnchorDate { get; set; }
 }
+

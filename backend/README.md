@@ -1,6 +1,6 @@
 # Backend
 
-ASP.NET Core / .NET 10, EF Core 10, PostgreSQL. NUnit для unit, integration и backend e2e. Версии закреплены в csproj и packages.lock.json; основание — [ADR-001](../docs/decisions/ADR-001-backend-stack.md).
+ASP.NET Core / .NET 10, EF Core 10, PostgreSQL. Доступ к данным выделен в отдельную сборку `SalesDashboard.DataAccess`; API зависит от неё, обратной зависимости нет. NUnit используется для unit, integration и backend e2e. Версии закреплены в csproj и packages.lock.json; основание — [ADR-001](../docs/decisions/ADR-001-backend-stack.md).
 
 ## Запуск из корня репозитория
 
@@ -37,7 +37,7 @@ Integration-проверка полного seed сохраняет фактич
 
 ```sh
 dotnet tool restore
-dotnet ef migrations add Name --project backend/src/SalesDashboard.Api --output-dir Data/Migrations
+dotnet ef migrations add Name --project backend/src/SalesDashboard.DataAccess --startup-project backend/src/SalesDashboard.Api --output-dir Data/Migrations
 ```
 
 При обычном запуске миграции применять вручную не нужно. Seed: 20 менеджеров, 75 клиентов, 6 категорий, 48 товаров, 3000 продаж за 12 месяцев. Seed__AnchorDate / SEED_ANCHOR_DATE (Compose) задаёт опорную дату; по умолчанию используется бизнес-дата первого запуска. Seed__RandomSeed по умолчанию 20260925, версия генератора 1. Для одинаковых параметров используется стабильный PRNG. Повторный запуск не меняет сохранённые данные. SeedRuns хранит параметры созданного набора, заполнение транзакционно и защищено advisory lock.
@@ -45,7 +45,8 @@ dotnet ef migrations add Name --project backend/src/SalesDashboard.Api --output-
 ## Структура
 
 - Domain — сущности и статусы.
-- Data — EF mapping, миграции и генератор seed.
+- `SalesDashboard.DataAccess` — отдельная сборка EF mapping, миграций, доменной модели и seed; её публичный контракт инициализации находится в `Abstractions/Services`.
+- `SalesDashboard.DataAccess` — отдельная сборка слоя доступа к данным; её публичный контракт инициализации находится в `Abstractions/Services`.
 - Features/Analytics — агрегаты и DTO dashboard.
 - Features/Sales — ограниченная история продаж.
 - Infrastructure — период, валидация и ProblemDetails.

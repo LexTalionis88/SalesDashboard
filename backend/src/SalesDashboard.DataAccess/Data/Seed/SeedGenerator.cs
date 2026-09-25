@@ -1,7 +1,7 @@
-using SalesDashboard.Api.Domain;
-using SalesDashboard.Api.Infrastructure;
+﻿using SalesDashboard.DataAccess.Domain;
+using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Api.Data.Seed;
+namespace SalesDashboard.DataAccess.Data.Seed;
 
 internal sealed record SeedData(Manager[] Managers, Customer[] Customers, Category[] Categories, Product[] Products, Sale[] Sales);
 
@@ -92,3 +92,4 @@ internal static class SeedGenerator
         }
     }
 }
+

@@ -1,5 +1,5 @@
 using SalesDashboard.Api.Features.Sales;
-using SalesDashboard.Api.Infrastructure;
+using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Api.Abstractions.Services;
 

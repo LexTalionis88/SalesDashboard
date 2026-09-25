@@ -1,6 +1,6 @@
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace SalesDashboard.Api.Infrastructure;
+namespace SalesDashboard.DataAccess.Infrastructure;
 
 internal sealed class RequestValidationException(string key, string message) : Exception(message)
 {
@@ -63,3 +63,4 @@ public sealed record DateRange(DateOnly From, DateOnly To)
         return range;
     }
 }
+

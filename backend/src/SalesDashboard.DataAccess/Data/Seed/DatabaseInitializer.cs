@@ -1,9 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using SalesDashboard.Api.Abstractions.Services;
-using SalesDashboard.Api.Domain;
-using SalesDashboard.Api.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using SalesDashboard.DataAccess.Abstractions.Services;
+using SalesDashboard.DataAccess.Domain;
+using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Api.Data.Seed;
+namespace SalesDashboard.DataAccess.Data.Seed;
 
 internal sealed class DatabaseInitializer(SalesDbContext db, IConfiguration config, TimeProvider clock, ILogger<DatabaseInitializer> logger) : IDatabaseInitializer
 {
@@ -41,3 +43,7 @@ internal sealed class DatabaseInitializer(SalesDbContext db, IConfiguration conf
         logger.LogInformation("Seed v{Version}: {Count} sales, anchor {Anchor}", SeedGenerator.Version, data.Sales.Length, anchor);
     }
 }
+
+
+
+

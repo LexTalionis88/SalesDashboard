@@ -35,3 +35,5 @@
 - 2026-09-25: константный Take(5) дл€ top products заменЄн на Take(topProductsLimit), где limit передаЄтс€ в метод как переменна€ и параметризуетс€ EF; Sales уже использовал Take(limit). Skip в backend отсутствует.
 
 - 2026-09-25: SalesService.GetAsync разделЄн на ValidateLimit, LoadSalesAsync и BuildSalesDto; добавлены NUnit unit-тесты лимита и преобразовани€ продаж.
+
+- 2026-09-25: BusinessRulesTests разделЄн на AnalyticsServiceTests, SalesServiceTests, DateRangeTests и SeedGeneratorTests; добавлен общий FixedClock.

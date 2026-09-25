@@ -40,3 +40,5 @@ Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂР
 - Unit, integration и e2e тесты разнесены в отдельные сборки SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests.
 
 - Очищены пустые каталоги API, оставшиеся после разделения Application/DataAccess и переноса тестов.
+
+- Testcontainers проверены: integration 12 тестов и backend e2e 1 тест проходят при доступном Docker daemon.

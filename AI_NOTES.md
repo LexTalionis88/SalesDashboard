@@ -41,3 +41,5 @@
 - 2026-09-25: тесты разнесены по сборкам SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests; старый объединённый тестовый проект удалён из solution.
 
 - 2026-09-25: проверены каталоги backend без bin/obj; удалены пустые остаточные папки API Domain, Abstractions, Data и Features после выноса слоёв.
+
+- 2026-09-25: Testcontainers проверены с доступом к Docker daemon: IntegrationTests 12/12, E2ETests 1/1; временные PostgreSQL контейнеры завершены тестовым lifecycle.

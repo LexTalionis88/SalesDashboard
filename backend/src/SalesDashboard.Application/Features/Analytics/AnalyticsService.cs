@@ -8,16 +8,16 @@ namespace SalesDashboard.Application.Features.Analytics;
 
 internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
 {
-    private IQueryable<Sale> Paid(DateRange range) => db.Sales.AsNoTracking()
+    internal IQueryable<Sale> Paid(DateRange range) => db.Sales.AsNoTracking()
         .Where(s => s.Status == SaleStatus.Paid && s.SoldAt >= range.StartUtc && s.SoldAt < range.EndUtc);
 
-    private IQueryable<SaleAggregate> Totals(DateRange range) => Paid(range).Select(s => new SaleAggregate
+    internal IQueryable<SaleAggregate> Totals(DateRange range) => Paid(range).Select(s => new SaleAggregate
     {
         Id = s.Id, ManagerId = s.ManagerId, SoldAt = s.SoldAt,
         Revenue = s.Items.Sum(i => i.UnitPrice * i.Quantity), Cost = s.Items.Sum(i => i.UnitCost * i.Quantity)
     });
 
-    private async Task<Metrics> MetricsAsync(DateRange range, CancellationToken ct)
+    internal async Task<Metrics> MetricsAsync(DateRange range, CancellationToken ct)
     {
         return await Totals(range).GroupBy(_ => 1).Select(g => new Metrics(g.Sum(x => x.Revenue), g.Sum(x => x.Cost), g.LongCount()))
             .SingleOrDefaultAsync(ct) ?? new Metrics(0, 0, 0);
@@ -38,10 +38,10 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
     internal static void ValidateRanking(string rankingBy)
     {
         if (rankingBy is not ("grossProfit" or "averageCheck"))
-            throw new RequestValidationException("rankingBy", "????????? grossProfit ? averageCheck.");
+            throw new RequestValidationException("rankingBy", "Допустимы grossProfit и averageCheck.");
     }
 
-    private async Task<ManagerData> LoadManagerDataAsync(DateRange range, string rankingBy, CancellationToken ct)
+    internal async Task<ManagerData> LoadManagerDataAsync(DateRange range, string rankingBy, CancellationToken ct)
     {
         var groups = await Totals(range).GroupBy(s => s.ManagerId)
             .Select(g => new { Id = g.Key, Revenue = g.Sum(s => s.Revenue), Cost = g.Sum(s => s.Cost), Count = g.LongCount() }).ToListAsync(ct);
@@ -58,7 +58,7 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         return new ManagerData(metrics, best, ranking);
     }
 
-    private async Task<DayDto[]> BuildSeriesAsync(DateRange range, CancellationToken ct)
+    internal async Task<DayDto[]> BuildSeriesAsync(DateRange range, CancellationToken ct)
     {
         var daily = await Totals(range).GroupBy(s => TimeZoneInfo.ConvertTimeBySystemTimeZoneId(s.SoldAt, DateRange.ZoneId).Date)
             .Select(g => new { Date = g.Key, Revenue = g.Sum(x => x.Revenue), Cost = g.Sum(x => x.Cost), Count = g.LongCount() }).ToListAsync(ct);
@@ -72,7 +72,7 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         }).ToArray();
     }
 
-    private async Task<CategoryDto[]> LoadCategoriesAsync(DateRange range, CancellationToken ct)
+    internal async Task<CategoryDto[]> LoadCategoriesAsync(DateRange range, CancellationToken ct)
     {
         var items = Paid(range).SelectMany(s => s.Items);
         var rows = await items.GroupBy(i => new { i.Product.CategoryId, i.Product.Category.Name })
@@ -81,7 +81,7 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         return rows.Select(g => new CategoryDto(g.Id, g.Name, Money.Format(g.Revenue), Money.Format(g.Revenue - g.Cost), g.Count, g.Quantity)).ToArray();
     }
 
-    private async Task<ProductDto[]> LoadProductsAsync(DateRange range, CancellationToken ct)
+    internal async Task<ProductDto[]> LoadProductsAsync(DateRange range, CancellationToken ct)
     {
         var items = Paid(range).SelectMany(s => s.Items);
         var rows = await items.GroupBy(i => new { i.ProductId, i.Product.Name, i.Product.CategoryId })
@@ -102,8 +102,8 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
 
 
     internal sealed record ManagerData(Metrics Metrics, ManagerDto? Best, RankingDto[] Ranking);
-    private sealed record ManagerRow(ManagerDto Manager, Metrics Metrics);
-    private sealed class SaleAggregate
+    internal sealed record ManagerRow(ManagerDto Manager, Metrics Metrics);
+    internal sealed class SaleAggregate
     {
         public int Id { get; init; }
         public int ManagerId { get; init; }
@@ -112,4 +112,3 @@ internal sealed class AnalyticsService(SalesDbContext db) : IAnalyticsService
         public decimal Cost { get; init; }
     }
 }
-

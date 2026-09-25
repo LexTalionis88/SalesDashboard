@@ -29,3 +29,5 @@
 - 2026-09-25: проверена кодировка русских строк и XML-комментариев; исправлены mojibake в комментариях и сообщениях валидации сервисов Analytics/Sales.
 
 - 2026-09-25: AnalyticsService.GetAsync разделён на валидацию, загрузку менеджеров, серию, категории, продукты и сборку DashboardDto; чистые этапы ValidateRanking и BuildDashboard доступны для unit-тестов.
+
+- 2026-09-25: методы AnalyticsService декомпозированы и переведены в internal; добавлены NUnit unit-тесты ValidateRanking и BuildDashboard, общий набор тестов вырос до 38.

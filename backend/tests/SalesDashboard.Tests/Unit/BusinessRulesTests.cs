@@ -35,6 +35,48 @@ public sealed class BusinessRulesTests
         });
     }
 
+    [TestCase("grossProfit")]
+    [TestCase("averageCheck")]
+    public void Analytics_accepts_supported_ranking(string rankingBy)
+    {
+        Assert.DoesNotThrow(() => AnalyticsService.ValidateRanking(rankingBy));
+    }
+
+    [Test]
+    public void Analytics_rejects_unknown_ranking()
+    {
+        var exception = Assert.Throws<RequestValidationException>(() => AnalyticsService.ValidateRanking("revenue"));
+        Assert.That(exception!.Message, Does.Contain("rankingBy").Or.Contain("grossProfit"));
+    }
+
+    [Test]
+    public void Analytics_builds_dashboard_from_calculated_parts()
+    {
+        var range = DateRange.Parse("2026-03-01", "2026-03-02", null, Clock);
+        var current = new Metrics(500, 320, 2);
+        var previous = new Metrics(250, 160, 1);
+        var manager = new ManagerDto(1, "Анна Соколова", "Команда", "Менеджер", true, "АС", null);
+        var result = AnalyticsService.BuildDashboard(
+            range,
+            "grossProfit",
+            new AnalyticsService.ManagerData(current, manager, [new RankingDto(1, manager, current.ToDto())]),
+            [new DayDto(range.From, "500.00", "180.00", 2)],
+            [new CategoryDto(1, "Дроны", "500.00", "180.00", 2, 2)],
+            [new ProductDto(1, "Модель", 1, "500.00", "180.00", 2, 2)],
+            previous);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Kpis.Revenue, Is.EqualTo("500.00"));
+            Assert.That(result.Kpis.BestManager, Is.EqualTo(manager));
+            Assert.That(result.Ranking, Has.Length.EqualTo(1));
+            Assert.That(result.Series, Has.Length.EqualTo(1));
+            Assert.That(result.Categories, Has.Length.EqualTo(1));
+            Assert.That(result.TopProducts, Has.Length.EqualTo(1));
+            Assert.That(result.Comparison.Metrics.Revenue, Is.EqualTo("250.00"));
+        });
+    }
+
     [TestCase(0, 0, 0)]
     [TestCase(100, 50, 100)]
     [TestCase(-50, -100, 50)]

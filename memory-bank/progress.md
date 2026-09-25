@@ -28,3 +28,5 @@ Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂР
 - Minimal API заменён на контроллеры DashboardController, SalesController и HealthController; проверка готовности использует IDatabaseReadiness.
 
 - AnalyticsService.GetAsync декомпозирован на отдельные этапы загрузки и сборки результата; вынесены тестируемые методы валидации и формирования DTO.
+
+- Методы AnalyticsService сделаны internal для доступа из тестовой сборки; добавлены unit-тесты в BusinessRulesTests, всего 38 тестов проходят.

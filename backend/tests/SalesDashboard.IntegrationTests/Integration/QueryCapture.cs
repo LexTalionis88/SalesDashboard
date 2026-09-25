@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 
-namespace SalesDashboard.Tests.Integration;
+namespace SalesDashboard.IntegrationTests;
 
 internal sealed class QueryCapture : DbCommandInterceptor
 {
@@ -17,4 +17,5 @@ internal sealed class QueryCapture : DbCommandInterceptor
         return ValueTask.FromResult(result);
     }
 }
+
 

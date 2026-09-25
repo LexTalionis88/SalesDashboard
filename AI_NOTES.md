@@ -37,3 +37,5 @@
 - 2026-09-25: SalesService.GetAsync разделён на ValidateLimit, LoadSalesAsync и BuildSalesDto; добавлены NUnit unit-тесты лимита и преобразования продаж.
 
 - 2026-09-25: BusinessRulesTests разделён на AnalyticsServiceTests, SalesServiceTests, DateRangeTests и SeedGeneratorTests; добавлен общий FixedClock.
+
+- 2026-09-25: тесты разнесены по сборкам SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests; старый объединённый тестовый проект удалён из solution.

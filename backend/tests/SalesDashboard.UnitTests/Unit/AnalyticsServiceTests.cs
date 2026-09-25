@@ -1,11 +1,11 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using SalesDashboard.Application.Features.Analytics;
 using SalesDashboard.Application.Features.Sales;
 using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Tests.Unit;
+namespace SalesDashboard.UnitTests;
 
 [TestFixture, Category("Unit")]
 public sealed class AnalyticsServiceTests
@@ -57,14 +57,14 @@ public sealed class AnalyticsServiceTests
             var range = DateRange.Parse("2026-03-01", "2026-03-02", null, Clock);
             var current = new Metrics(500, 320, 2);
             var previous = new Metrics(250, 160, 1);
-            var manager = new ManagerDto(1, "Анна Соколова", "Команда", "Менеджер", true, "АС", null);
+            var manager = new ManagerDto(1, "РђРЅРЅР° РЎРѕРєРѕР»РѕРІР°", "РљРѕРјР°РЅРґР°", "РњРµРЅРµРґР¶РµСЂ", true, "РђРЎ", null);
             var result = AnalyticsService.BuildDashboard(
                 range,
                 "grossProfit",
                 new AnalyticsService.ManagerData(current, manager, [new RankingDto(1, manager, current.ToDto())]),
                 [new DayDto(range.From, "500.00", "180.00", 2)],
-                [new CategoryDto(1, "Дроны", "500.00", "180.00", 2, 2)],
-                [new ProductDto(1, "Модель", 1, "500.00", "180.00", 2, 2)],
+                [new CategoryDto(1, "Р”СЂРѕРЅС‹", "500.00", "180.00", 2, 2)],
+                [new ProductDto(1, "РњРѕРґРµР»СЊ", 1, "500.00", "180.00", 2, 2)],
                 previous);
     
             Assert.Multiple(() =>
@@ -93,3 +93,4 @@ public sealed class AnalyticsServiceTests
             Assert.That(Metrics.PercentChange(null, 50), Is.Null);
         }
 }
+

@@ -1,11 +1,11 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using SalesDashboard.Application.Features.Analytics;
 using SalesDashboard.Application.Features.Sales;
 using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Tests.Unit;
+namespace SalesDashboard.UnitTests;
 
 [TestFixture, Category("Unit")]
 public sealed class DateRangeTests
@@ -47,3 +47,4 @@ public sealed class DateRangeTests
         public void Invalid_periods_are_rejected(string? from, string? to, string? preset) =>
             Assert.Throws<RequestValidationException>(() => DateRange.Parse(from, to, preset, Clock));
 }
+

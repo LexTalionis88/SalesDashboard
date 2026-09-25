@@ -1,11 +1,11 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using SalesDashboard.Application.Features.Analytics;
 using SalesDashboard.Application.Features.Sales;
 using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.DataAccess.Infrastructure;
 
-namespace SalesDashboard.Tests.Unit;
+namespace SalesDashboard.UnitTests;
 
 [TestFixture, Category("Unit")]
 public sealed class SalesServiceTests
@@ -14,3 +14,4 @@ public sealed class SalesServiceTests
 
 
 }
+

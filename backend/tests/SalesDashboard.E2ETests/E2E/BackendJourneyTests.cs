@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text.Json;
 using Testcontainers.PostgreSql;
 
-namespace SalesDashboard.Tests.E2E;
+namespace SalesDashboard.E2ETests;
 
 [TestFixture, Category("E2E"), NonParallelizable]
 public sealed class BackendJourneyTests
@@ -98,4 +98,5 @@ public sealed class BackendJourneyTests
         if (postgres is not null) await postgres.DisposeAsync();
     }
 }
+
 

@@ -5,6 +5,8 @@
     <Project Path="src/SalesDashboard.DataAccess/SalesDashboard.DataAccess.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/SalesDashboard.Tests/SalesDashboard.Tests.csproj" />
+    <Project Path="tests/SalesDashboard.E2ETests/SalesDashboard.E2ETests.csproj" />
+    <Project Path="tests/SalesDashboard.IntegrationTests/SalesDashboard.IntegrationTests.csproj" />
+    <Project Path="tests/SalesDashboard.UnitTests/SalesDashboard.UnitTests.csproj" />
   </Folder>
 </Solution>

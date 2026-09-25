@@ -36,3 +36,5 @@ Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂР
 - SalesService.GetAsync декомпозирован на валидацию лимита, EF-загрузку и чистую сборку DTO; добавлены unit-тесты, всего 43 теста в проекте.
 
 - Unit-тесты структурированы по ответственности: отдельные классы для AnalyticsService и SalesService, а также для DateRange и SeedGenerator.
+
+- Unit, integration и e2e тесты разнесены в отдельные сборки SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests.

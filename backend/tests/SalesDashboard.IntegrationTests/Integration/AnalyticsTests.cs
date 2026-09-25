@@ -17,7 +17,7 @@ using SalesDashboard.Application.Features.Sales;
 using SalesDashboard.DataAccess.Infrastructure;
 using Testcontainers.PostgreSql;
 
-namespace SalesDashboard.Tests.Integration;
+namespace SalesDashboard.IntegrationTests;
 
 [TestFixture, Category("Integration"), NonParallelizable]
 public sealed class AnalyticsTests
@@ -212,4 +212,5 @@ public sealed class AnalyticsTests
         }
     }
 }
+
 

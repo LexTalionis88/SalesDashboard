@@ -4,7 +4,7 @@
 
 | ID | Приоритет | Требование / ограничение | Проверка или свидетельство | Источник |
 | --- | --- | --- | --- | --- |
-| NFR-01 | MUST | Backend: C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await | Состав проекта, endpoints, асинхронные вызовы БД | §2, с.2 |
+| NFR-01 | MUST | Backend: C#, .NET 8+ по ТЗ; .NET 10 по уточнению пользователя, ASP.NET Core, EF Core, REST, async/await | Состав проекта, endpoints, асинхронные вызовы БД | §2, с.2 |
 | NFR-02 | MUST | Frontend: React + TypeScript; данные: PostgreSQL | Зависимости frontend, контейнер и провайдер БД | §2, с.2 |
 | NFR-03 | MUST | Docker + Compose; запуск одной командой `docker compose up --build` | На чистом окружении автоматически стартуют frontend/backend/БД, применяются миграции, создаётся seed; dashboard доступен | §1–2, с.2; §14, с.8 |
 | NFR-04 | MUST | EF Core migrations, корректные связи и типы | Версионируемая схема, внешние ключи, подходящие денежные и временные типы | §8, с.6 |

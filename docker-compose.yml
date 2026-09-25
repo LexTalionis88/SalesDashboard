@@ -1,5 +1,31 @@
-# Каркас по разделу 22 ТЗ. Пока не является рабочим окружением.
-# Предстоит описать frontend, backend, postgres; добавить Dockerfile,
-# healthcheck БД, автоматические migrations/seed и persistent volume.
-# Целевая команда после реализации: docker compose up --build
-services: {}
+name: sales-dashboard
+services:
+  postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_DB: sales_dashboard
+      POSTGRES_USER: sales
+      POSTGRES_PASSWORD: sales_local
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - sales-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sales -d sales_dashboard"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      ConnectionStrings__Sales: Host=postgres;Database=sales_dashboard;Username=sales;Password=sales_local
+      Seed__AnchorDate: ${SEED_ANCHOR_DATE:-}
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+volumes:
+  sales-data:

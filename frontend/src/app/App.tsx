@@ -7,6 +7,8 @@ import type { Dashboard, Sale, SalesResponse } from '../shared/api/types'
 type PeriodChoice = 'today' | 'last7Days' | 'last30Days' | 'thisMonth' | 'lastMonth' | 'custom'
 type Ranking = 'grossProfit' | 'averageCheck'
 type LoadState<T> = { value: T | null; loading: boolean; error: string }
+
+// Форматтеры оставляют деньги строками в API и преобразуют их в число только для отображения.
 const formatMoney = (value: string | null) => value === null ? '—' : `${Number(value).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₽`
 const formatDate = (value: string) => new Date(`${value}T00:00:00`).toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' })
 const formatChange = (value: number | null) => value === null ? '—' : `${value > 0 ? '+' : ''}${value.toFixed(1)}%`
@@ -14,6 +16,7 @@ const isoDate = (date: Date) => [date.getFullYear(), String(date.getMonth() + 1)
 const businessToday = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Moscow' }))
 
 function periodDates(choice: PeriodChoice): [string, string] {
+  // Пресеты вычисляются на клиенте, но границы периода повторно валидируются backend.
   const today = businessToday()
   const from = new Date(today)
   const to = new Date(today)
@@ -28,12 +31,15 @@ function periodDates(choice: PeriodChoice): [string, string] {
 }
 
 export function App() {
+  // Ленивый initializer вычисляет начальный период только при создании компонента.
   const [initial] = useState(() => periodDates('last30Days'))
   const [from, setFrom] = useState(initial[0])
   const [to, setTo] = useState(initial[1])
   const [choice, setChoice] = useState<PeriodChoice>('last30Days')
   const [rankingBy, setRankingBy] = useState<Ranking>('grossProfit')
   const valid = Boolean(from && to && from <= to)
+  // queryKey связывает данные с фильтрами. При их изменении TanStack Query запускает новый запрос,
+  // а предыдущий получает AbortSignal и может быть отменён.
   const dashboardQuery = useQuery({ queryKey: ['dashboard', from, to, rankingBy], queryFn: ({ signal }) => api.dashboard(from, to, rankingBy, signal), enabled: valid })
   const salesQuery = useQuery({ queryKey: ['sales', from, to], queryFn: ({ signal }) => api.sales(from, to, signal), enabled: valid })
   const dashboard: LoadState<Dashboard> = { value: dashboardQuery.data ?? null, loading: dashboardQuery.isPending, error: dashboardQuery.error?.message ?? '' }
@@ -49,6 +55,7 @@ export function App() {
   }
 
   const invalid = from && to && from > to
+  // При неверном диапазоне enabled: valid отключает оба запроса, поэтому ошибка показывается сразу.
   return <div className="shell">
     <aside className="sidebar">
       <div className="brand"><span className="brand-mark">S</span><span>Sales<span>Lab</span></span></div>
@@ -80,6 +87,7 @@ export function App() {
 }
 
 function ErrorBlock({ message, retry }: { message: string; retry: () => void }) {
+  // Компонент ошибки получает retry-функцию от конкретного query и не знает деталей загрузки.
   return <div className="error" role="alert">{message} <button onClick={retry}>Повторить</button></div>
 }
 
@@ -92,6 +100,7 @@ function Kpi({ title, value, change, tone, icon, changeUnit = '%' }: { title: st
 }
 
 function DashboardView({ data, rankingBy, setRankingBy }: { data: Dashboard; rankingBy: Ranking; setRankingBy: (value: Ranking) => void }) {
+  // Здесь только представление агрегированного DTO: бизнес-расчёты выполняются на backend.
   const { kpis, comparison } = data
   const chart = data.series.map(day => ({ date: formatDate(day.date), revenue: Number(day.revenue), profit: Number(day.grossProfit), count: day.salesCount }))
   const leader = data.ranking.find(row => row.manager.id === kpis.bestManager?.id)
@@ -136,6 +145,7 @@ function DashboardView({ data, rankingBy, setRankingBy }: { data: Dashboard; ran
 }
 
 function SalesView({ state, retry }: { state: LoadState<SalesResponse>; retry: () => void }) {
+  // История загружается отдельным запросом, поэтому её ошибка не блокирует KPI и график.
   return <section className="card sales-card">
     <div className="card-head"><div><h2>Последние продажи</h2><p className="muted">Все статусы за выбранный период</p></div></div>
     {state.loading && <p className="muted">Загружаем продажи…</p>}
@@ -148,6 +158,7 @@ function SalesView({ state, retry }: { state: LoadState<SalesResponse>; retry: (
 }
 
 function SaleRow({ sale }: { sale: Sale }) {
+  // IncludedInKpis уже рассчитан API; UI только отображает статус и признак строки.
   const status = sale.status === 'Paid' ? 'Оплачена' : sale.status === 'Refunded' ? 'Возврат' : 'Отменена'
   return <div className="table-row">
     <span>{new Date(sale.soldAt).toLocaleDateString('ru-RU', { timeZone: 'Europe/Moscow' })}</span>

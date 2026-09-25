@@ -1,3 +1,5 @@
+// Денежные значения приходят строками, чтобы не терять точность decimal при обмене JSON.
+// Nullable-поля обозначают отсутствие базы сравнения или данных за период.
 export type Period = { from: string; to: string; timeZone: string }
 export type Metrics = { revenue: string; cost: string; grossProfit: string; salesCount: number; averageCheck: string | null; margin: number | null }
 export type Manager = { id: number; name: string; team: string; position: string; isActive: boolean; initials: string; avatarUrl: string | null }

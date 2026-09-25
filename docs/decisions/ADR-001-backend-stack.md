@@ -12,7 +12,7 @@
 - NUnit — единый test framework для unit, integration и e2e. Предыдущее предложение xUnit заменено этим решением.
 - В текущем backend тесты организованы в одном проекте с категориями `Unit`, `Integration`, `E2E`.
 - Integration использует настоящую PostgreSQL в Testcontainers и HTTP через WebApplicationFactory.
-- Backend e2e запускает отдельный процесс ASP.NET Core/Kestrel и PostgreSQL, проверяет HTTP-сценарий и перезапуск. Это не браузерный e2e готового frontend: UI ещё не реализован. Будущие браузерные e2e также должны запускаться NUnit, например с Playwright for .NET.
+- Backend e2e запускает отдельный процесс ASP.NET Core/Kestrel и PostgreSQL, проверяет HTTP-сценарий и перезапуск. Браузерные frontend e2e также запускаются NUnit с Playwright for .NET и используют Compose frontend.
 - `IAnalyticsService`, `ISalesService` и `IDatabaseInitializer` находятся в отдельном каталоге `Abstractions/Services`; реализации и доменные типы имеют внутреннюю область видимости. Это позволяет тестировать зависимости через интерфейсы и не смешивать контракты с реализациями.
 
 ## Зафиксированные зависимости

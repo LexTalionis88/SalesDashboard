@@ -45,3 +45,5 @@
 
 - Frontend dashboard реализован на React + TypeScript, Vite, TanStack Query и Recharts. Подключены оба API, фильтры периода и рейтинга, KPI, график, категории, топ товаров и история продаж. Frontend и Nginx proxy работают в Compose на localhost:3000.
 - `npm run build` и `docker compose build frontend` проходят; страница и `/api/dashboard` через frontend proxy отвечают HTTP 200.
+- Добавлен Playwright for .NET 1.56 в E2E-сборку NUnit. `FrontendJourneyTests` проверяет загрузку dashboard, смену периода и сортировки, а также empty state.
+- Chromium установлен, браузерные frontend E2E проходят: 3/3. Полный прогон solution проходит: Unit 25, Integration 12, E2E 4.

@@ -30,7 +30,7 @@ Seed: 20 менеджеров, 75 клиентов, 6 категорий, 48 т�
 - `backend/src/SalesDashboard.Api` — HTTP-контроллеры и композиция.
 - `backend/src/SalesDashboard.Application` — бизнес-логика и DTO.
 - `backend/src/SalesDashboard.DataAccess` — EF Core, миграции и seed.
-- `backend/tests` — отдельные NUnit-сборки unit, integration и backend E2E.
+- `backend/tests` — отдельные NUnit-сборки unit, integration и E2E, включая браузерные сценарии frontend.
 - `frontend` — React, Vite, TanStack Query, Recharts и Nginx.
 
 ## Проверка
@@ -40,7 +40,7 @@ dotnet test backend/SalesDashboard.slnx
 npm --prefix frontend run build
 ```
 
-Integration и backend E2E используют Testcontainers с PostgreSQL и требуют Docker. Браузерные автоматические проверки пока не добавлены.
+Integration и backend E2E используют Testcontainers с PostgreSQL и требуют Docker. Браузерные E2E используют Playwright for .NET и требуют установленный Chromium; адрес frontend задаётся переменной `FRONTEND_E2E_URL`.
 
 ## Документы
 

@@ -45,3 +45,5 @@
 - 2026-09-25: Testcontainers проверены с доступом к Docker daemon: IntegrationTests 12/12, E2ETests 1/1; временные PostgreSQL контейнеры завершены тестовым lifecycle.
 
 - 2026-09-25: реализован frontend dashboard с реальными API на React, TypeScript, Vite, TanStack Query и Recharts; контейнер Nginx проксирует API. Успешны сборки npm и Docker, HTTP-проверка страницы и proxy. Встроенный браузер для визуальной проверки оказался недоступен.
+
+- 2026-09-25: по запросу «делай» добавлены браузерные E2E на NUnit и Playwright for .NET: загрузка dashboard, смена периода/рейтинга и empty state. Chromium установлен локально, 3/3 browser E2E проходят; полный solution прогон: Unit 25, Integration 12, E2E 4.

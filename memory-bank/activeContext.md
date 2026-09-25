@@ -6,8 +6,8 @@
 
 Реализованы backend, EF migration, PostgreSQL seed, dashboard/sales API, валидация/ошибки, OpenAPI и Docker Compose. Frontend dashboard подключён к API через Nginx proxy; добавлены фильтры, KPI, график, рейтинг, категории, товары, история и состояния загрузки/ошибки/пустой выборки. Бизнес-правила реализованы; сравнение общих KPI включено, изменения в строках рейтинга пока нет.
 
-Unit/integration/backend e2e написаны на NUnit. Integration — PostgreSQL Testcontainers, e2e — отдельный Kestrel и PostgreSQL. Фактические проверки и границы — progress.md. Для API есть docs/api-contract.md и endpoint /openapi/v1.json.
+Unit/integration/backend e2e и браузерные frontend e2e написаны на NUnit. Integration — PostgreSQL Testcontainers, backend e2e — отдельный Kestrel и PostgreSQL, browser e2e — Playwright for .NET против Compose frontend. Фактические проверки и границы — progress.md. Для API есть docs/api-contract.md и endpoint /openapi/v1.json.
 
-Следующий этап: браузерные E2E на NUnit и визуальная проверка dashboard. Frontend использует React, TypeScript, Vite, TanStack Query и Recharts; версии закреплены в package-lock.json. Встроенный браузер при первой попытке проверки был недоступен.
+Браузерные E2E реализованы в `FrontendJourneyTests`: загрузка dashboard, смена периода/рейтинга и пустой период. Chromium установлен локально, три сценария проходят; визуальный интерактивный просмотр через встроенный браузер остаётся отдельным ручным шагом.
 
 Работа ведётся в main, коммиты на русском языке. Удалённого репозитория нет. Фактический общий timebox не измерялся; не выдавать оценку за учёт времени.

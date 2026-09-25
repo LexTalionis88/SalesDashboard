@@ -1,0 +1,5 @@
+# Каркас по разделу 22 ТЗ. Пока не является рабочим окружением.
+# Предстоит описать frontend, backend, postgres; добавить Dockerfile,
+# healthcheck БД, автоматические migrations/seed и persistent volume.
+# Целевая команда после реализации: docker compose up --build
+services: {}

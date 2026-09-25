@@ -1,0 +1,18 @@
+# Local tools and build artifacts
+tmp/
+node_modules/
+dist/
+coverage/
+bin/
+obj/
+TestResults/
+.vs/
+.idea/
+*.user
+*.suo
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

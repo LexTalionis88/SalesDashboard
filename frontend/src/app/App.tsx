@@ -6,7 +6,7 @@ import type { Dashboard, Sale, SalesResponse } from '../shared/api/types'
 
 type PeriodChoice = 'today' | 'last7Days' | 'last30Days' | 'thisMonth' | 'lastMonth' | 'custom'
 type Ranking = 'grossProfit' | 'averageCheck'
-type LoadState<T> = { value: T | null; loading: boolean; error: string }
+type LoadState<T> = { readonly value: T | null; readonly loading: boolean; readonly error: string }
 
 // Форматтеры оставляют деньги строками в API и преобразуют их в число только для отображения.
 const formatMoney = (value: string | null) => value === null ? '—' : `${Number(value).toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₽`
@@ -15,7 +15,7 @@ const formatChange = (value: number | null) => value === null ? '—' : `${value
 const isoDate = (date: Date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-')
 const businessToday = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Moscow' }))
 
-function periodDates(choice: PeriodChoice): [string, string] {
+function periodDates(choice: PeriodChoice): readonly [string, string] {
   // Пресеты вычисляются на клиенте, но границы периода повторно валидируются backend.
   const today = businessToday()
   const from = new Date(today)

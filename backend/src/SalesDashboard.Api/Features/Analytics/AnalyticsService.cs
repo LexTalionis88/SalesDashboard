@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SalesDashboard.Api.Abstractions.Services;
 using SalesDashboard.Api.Data;
 using SalesDashboard.Api.Domain;
 using SalesDashboard.Api.Infrastructure;

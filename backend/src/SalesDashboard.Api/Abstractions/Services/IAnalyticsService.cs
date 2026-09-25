@@ -1,6 +1,7 @@
+using SalesDashboard.Api.Features.Analytics;
 using SalesDashboard.Api.Infrastructure;
 
-namespace SalesDashboard.Api.Features.Analytics;
+namespace SalesDashboard.Api.Abstractions.Services;
 
 /// <summary>Предоставляет серверную аналитику dashboard.</summary>
 public interface IAnalyticsService

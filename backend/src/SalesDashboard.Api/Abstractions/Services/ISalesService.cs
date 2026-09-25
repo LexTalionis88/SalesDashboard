@@ -1,6 +1,7 @@
+using SalesDashboard.Api.Features.Sales;
 using SalesDashboard.Api.Infrastructure;
 
-namespace SalesDashboard.Api.Features.Sales;
+namespace SalesDashboard.Api.Abstractions.Services;
 
 /// <summary>Предоставляет ограниченную историю продаж.</summary>
 public interface ISalesService

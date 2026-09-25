@@ -1,4 +1,4 @@
-namespace SalesDashboard.Api.Data.Seed;
+namespace SalesDashboard.Api.Abstractions.Services;
 
 /// <summary>Применяет миграции и выполняет идемпотентное первоначальное заполнение базы.</summary>
 public interface IDatabaseInitializer

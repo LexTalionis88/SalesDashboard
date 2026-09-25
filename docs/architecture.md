@@ -23,7 +23,7 @@ flowchart LR
 
 ## Backend
 
-Один проект `SalesDashboard.Api` с модулями `Features/Analytics` и `Features/Sales`. Endpoints отвечают за HTTP/валидацию, query-сервисы — за правила выборки и SQL-агрегации, `Data` — за EF mapping/migrations/seed, `Domain` — за сущности. Дополнительные `.csproj` для каждого слоя не предлагаются. Точные версии runtime/EF/provider и форма endpoints — D-10.
+Один проект `SalesDashboard.Api` с публичными контрактами сервисов в `Abstractions/Services` и внутренними модулями `Features/Analytics`, `Features/Sales`, `Data` и `Domain`. Endpoints отвечают за HTTP/валидацию, query-сервисы — за правила выборки и SQL-агрегации, `Data` — за EF mapping/migrations/seed, `Domain` — за сущности. Контракты отделены от реализаций. Дополнительные `.csproj` для каждого слоя не предлагаются.
 
 Read-only запросы используют DTO projections, `AsNoTracking`, async I/O и `CancellationToken`. Бизнес-фильтр статусов/дат централизуется. DbContext не используется параллельно в нескольких запросах. Валидация from/to, sort и limit выполняется до обращения к БД. Предлагается единый формат ProblemDetails: 400 — неверные параметры, 500 — непредвиденная ошибка без SQL/stack trace для пользователя; детали остаются в логах.
 

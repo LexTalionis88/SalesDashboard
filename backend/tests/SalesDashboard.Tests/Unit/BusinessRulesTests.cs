@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using SalesDashboard.DataAccess.Data.Seed;
 using SalesDashboard.Application.Features.Analytics;
+using SalesDashboard.Application.Features.Sales;
+using SalesDashboard.DataAccess.Domain;
 using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.Tests.Unit;
@@ -145,6 +147,42 @@ public sealed class BusinessRulesTests
             Assert.That(first.Sales.Min(s => s.SoldAt), Is.EqualTo(DateRange.ToUtc(anchor.AddMonths(-12).AddDays(1))));
             Assert.That(first.Sales.Any(s => s.ManagerId == 18 && s.SoldAt >= DateRange.ToUtc(anchor.AddDays(-29))), Is.False);
             Assert.That(first.Sales.Any(s => s.Items.Any(i => i.UnitCost > i.UnitPrice)), Is.True);
+        });
+    }
+    [TestCase(1)]
+    [TestCase(100)]
+    public void Sales_accepts_limit_in_supported_range(int limit)
+    {
+        Assert.DoesNotThrow(() => SalesService.ValidateLimit(limit));
+    }
+
+    [TestCase(0)]
+    [TestCase(101)]
+    public void Sales_rejects_limit_outside_supported_range(int limit)
+    {
+        Assert.Throws<RequestValidationException>(() => SalesService.ValidateLimit(limit));
+    }
+
+    [Test]
+    public void Sales_builds_dto_and_marks_paid_sales_for_kpis()
+    {
+        var range = DateRange.Parse("2026-03-01", "2026-03-02", null, Clock);
+        var manager = new ManagerDto(1, "Анна Соколова", "Команда", "Менеджер", true, "АС", null);
+        var customer = new CustomerDto(1, "Контакт", "Компания", "SMB");
+        var result = SalesService.BuildSalesDto(range, 20,
+        [
+            new SalesService.SalesRow(1, DateTime.UtcNow, SaleStatus.Paid, manager, customer, 500, 180,
+                [new SalesService.SaleItemRow(2, "Модель", 2, 250, 160)]),
+            new SalesService.SalesRow(2, DateTime.UtcNow, SaleStatus.Cancelled, manager, customer, 100, 20, [])
+        ]);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Items, Has.Length.EqualTo(2));
+            Assert.That(result.Items[0].IncludedInKpis, Is.True);
+            Assert.That(result.Items[1].IncludedInKpis, Is.False);
+            Assert.That(result.Items[0].Amount, Is.EqualTo("500.00"));
+            Assert.That(result.Items[0].Items[0].UnitPrice, Is.EqualTo("250.00"));
         });
     }
 }

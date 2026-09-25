@@ -7,7 +7,11 @@ using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.DataAccess.Data.Seed;
 
-internal sealed class DatabaseInitializer(SalesDbContext db, IConfiguration config, TimeProvider clock, ILogger<DatabaseInitializer> logger) : IDatabaseInitializer
+internal sealed class DatabaseInitializer(
+    SalesDbContext db,
+    IConfiguration config,
+    TimeProvider clock,
+    ILogger<DatabaseInitializer> logger) : IDatabaseInitializer
 {
     /// <summary>Применяет миграции и создаёт воспроизводимый seed в пустой базе.</summary>
     public async Task InitializeAsync(CancellationToken ct = default)
@@ -40,7 +44,11 @@ internal sealed class DatabaseInitializer(SalesDbContext db, IConfiguration conf
             """, ct);
         await transaction.CommitAsync(ct);
         db.ChangeTracker.Clear();
-        logger.LogInformation("Seed v{Version}: {Count} sales, anchor {Anchor}", SeedGenerator.Version, data.Sales.Length, anchor);
+        logger.LogInformation(
+            "Seed v{Version}: {Count} sales, anchor {Anchor}",
+            SeedGenerator.Version,
+            data.Sales.Length,
+            anchor);
     }
 }
 

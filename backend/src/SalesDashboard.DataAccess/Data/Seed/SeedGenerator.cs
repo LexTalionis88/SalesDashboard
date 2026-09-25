@@ -3,7 +3,12 @@ using SalesDashboard.DataAccess.Infrastructure;
 
 namespace SalesDashboard.DataAccess.Data.Seed;
 
-internal sealed record SeedData(Manager[] Managers, Customer[] Customers, Category[] Categories, Product[] Products, Sale[] Sales);
+internal sealed record SeedData(
+    Manager[] Managers,
+    Customer[] Customers,
+    Category[] Categories,
+    Product[] Products,
+    Sale[] Sales);
 
 internal static class SeedGenerator
 {
@@ -12,20 +17,36 @@ internal static class SeedGenerator
     public static SeedData Generate(DateOnly anchor, int seed)
     {
         var random = new StableRandom(seed);
-        string[] first = ["Анна", "Михаил", "Елена", "Дмитрий", "Ольга", "Алексей", "Мария", "Сергей", "Ирина", "Павел"];
-        string[] last = ["Соколова", "Петров", "Орлова", "Волков", "Морозова", "Смирнов", "Крылова", "Попов", "Кузнецова", "Лебедев"];
+        string[] first =
+            ["Анна", "Михаил", "Елена", "Дмитрий", "Ольга", "Алексей", "Мария", "Сергей", "Ирина", "Павел"];
+        string[] last =
+            ["Соколова", "Петров", "Орлова", "Волков", "Морозова", "Смирнов", "Крылова", "Попов",
+                "Кузнецова", "Лебедев"];
         var managers = Enumerable.Range(1, 20).Select(i => new Manager
         {
-            Id = i, Name = $"{first[(i - 1) % 10]} {last[(i - 1) % 10]}{(i > 10 ? " II" : "")}",
-            Team = i <= 10 ? "Корпоративные продажи" : "Региональные продажи", Position = i <= 3 ? "Ведущий менеджер" : "Менеджер",
-            Initials = $"{first[(i - 1) % 10][0]}{last[(i - 1) % 10][0]}", IsActive = i != 18
+            Id = i,
+            Name = $"{first[(i - 1) % 10]} {last[(i - 1) % 10]}{(i > 10 ? " II" : "")}",
+            Team = i <= 10 ? "Корпоративные продажи" : "Региональные продажи",
+            Position = i <= 3 ? "Ведущий менеджер" : "Менеджер",
+            Initials = $"{first[(i - 1) % 10][0]}{last[(i - 1) % 10][0]}",
+            IsActive = i != 18
         }).ToArray();
         var customers = Enumerable.Range(1, 75).Select(i => new Customer
-        { Id = i, Name = $"Контакт {i:00}", Company = $"Компания {i:00}", Segment = new[] { "SMB", "Enterprise", "Retail" }[i % 3] }).ToArray();
+        {
+            Id = i,
+            Name = $"Контакт {i:00}",
+            Company = $"Компания {i:00}",
+            Segment = new[] { "SMB", "Enterprise", "Retail" }[i % 3]
+        }).ToArray();
         string[] categoryNames = ["Дроны", "Камеры", "Стабилизаторы", "Объективы", "Аксессуары", "Аудио"];
         var categories = categoryNames.Select((name, i) => new Category { Id = i + 1, Name = name }).ToArray();
         var products = Enumerable.Range(1, 48).Select(i => new Product
-        { Id = i, Name = $"{categoryNames[(i - 1) / 8]} — модель {(i - 1) % 8 + 1}", Sku = $"SKU-{i:000}", CategoryId = (i - 1) / 8 + 1 }).ToArray();
+        {
+            Id = i,
+            Name = $"{categoryNames[(i - 1) / 8]} — модель {(i - 1) % 8 + 1}",
+            Sku = $"SKU-{i:000}",
+            CategoryId = (i - 1) / 8 + 1
+        }).ToArray();
         var firstDay = anchor.AddMonths(-12).AddDays(1);
         var totalDays = anchor.DayNumber - firstDay.DayNumber + 1;
         var sales = new List<Sale>(3000);
@@ -40,9 +61,15 @@ internal static class SeedGenerator
             var statusDraw = random.Next(100);
             var sale = new Sale
             {
-                Id = id, ManagerId = managerId, CustomerId = random.Next(75) + 1,
+                Id = id,
+                ManagerId = managerId,
+                CustomerId = random.Next(75) + 1,
                 SoldAt = DateRange.ToUtc(date).AddHours(8 + random.Next(12)).AddMinutes(random.Next(60)),
-                Status = statusDraw < 82 ? SaleStatus.Paid : statusDraw < 93 ? SaleStatus.Cancelled : SaleStatus.Refunded
+                Status = statusDraw < 82
+                    ? SaleStatus.Paid
+                    : statusDraw < 93
+                        ? SaleStatus.Cancelled
+                        : SaleStatus.Refunded
             };
             var itemCount = 1 + random.Next(5);
             for (var j = 0; j < itemCount; j++)
@@ -51,8 +78,11 @@ internal static class SeedGenerator
                 var price = decimal.Round((1000 + product * 1100m) * (80 + random.Next(50)) / 100m, 2);
                 sale.Items.Add(new SaleItem
                 {
-                    Id = itemId++, ProductId = product, Quantity = 1 + random.Next(managerId <= 4 ? 12 : 4),
-                    UnitPrice = price, UnitCost = decimal.Round(price * (55 + random.Next(55)) / 100m, 2)
+                    Id = itemId++,
+                    ProductId = product,
+                    Quantity = 1 + random.Next(managerId <= 4 ? 12 : 4),
+                    UnitPrice = price,
+                    UnitCost = decimal.Round(price * (55 + random.Next(55)) / 100m, 2)
                 });
             }
             sales.Add(sale);
@@ -64,14 +94,17 @@ internal static class SeedGenerator
             sales[i].SoldAt = DateRange.ToUtc(anchor);
             sales[i].ManagerId = i == 1 ? 19 : 20;
             sales[i].Status = SaleStatus.Paid;
-            sales[i].Items = [new SaleItem { Id = itemId++, ProductId = 1, Quantity = 1, UnitPrice = 10000, UnitCost = 6000 }];
+            sales[i].Items =
+                [new SaleItem { Id = itemId++, ProductId = 1, Quantity = 1, UnitPrice = 10000, UnitCost = 6000 }];
         }
         sales[3].Status = SaleStatus.Paid;
-        sales[3].Items = [new SaleItem { Id = itemId++, ProductId = 2, Quantity = 100, UnitPrice = 100000, UnitCost = 70000 }];
+        sales[3].Items =
+            [new SaleItem { Id = itemId++, ProductId = 2, Quantity = 100, UnitPrice = 100000, UnitCost = 70000 }];
         for (var i = 4; i < 104; i++)
         {
             sales[i].Status = SaleStatus.Paid;
-            sales[i].Items = [new SaleItem { Id = itemId++, ProductId = 40, Quantity = 1, UnitPrice = 100, UnitCost = 80 }];
+            sales[i].Items =
+                [new SaleItem { Id = itemId++, ProductId = 40, Quantity = 1, UnitPrice = 100, UnitCost = 80 }];
         }
         sales[104].Status = SaleStatus.Paid;
         sales[104].Items = [new SaleItem { Id = itemId++, ProductId = 3, Quantity = 1, UnitPrice = 0, UnitCost = 100 }];

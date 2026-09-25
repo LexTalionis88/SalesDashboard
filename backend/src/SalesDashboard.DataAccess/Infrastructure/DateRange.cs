@@ -17,9 +17,11 @@ public sealed record DateRange(DateOnly From, DateOnly To)
     public DateTime EndUtc => ToUtc(To.AddDays(1));
     public DateRange Previous => new(From.AddDays(-Days), From.AddDays(-1));
     /// <summary>Переводит полночь бизнес-даты в UTC.</summary>
-    public static DateTime ToUtc(DateOnly date) => TimeZoneInfo.ConvertTimeToUtc(date.ToDateTime(TimeOnly.MinValue), Zone);
+    public static DateTime ToUtc(DateOnly date) =>
+        TimeZoneInfo.ConvertTimeToUtc(date.ToDateTime(TimeOnly.MinValue), Zone);
     /// <summary>Возвращает текущую дату в бизнес-часовом поясе.</summary>
-    public static DateOnly Today(TimeProvider clock) => DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(clock.GetUtcNow(), Zone).DateTime);
+    public static DateOnly Today(TimeProvider clock) =>
+        DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(clock.GetUtcNow(), Zone).DateTime);
 
     /// <summary>Разбирает и проверяет параметры периода запроса.</summary>
     public static DateRange Parse(string? from, string? to, string? preset, TimeProvider clock)
@@ -47,7 +49,8 @@ public sealed record DateRange(DateOnly From, DateOnly To)
     /// <summary>Разбирает дату в формате YYYY-MM-DD.</summary>
     public static DateOnly ParseDate(string? value, string key)
     {
-        if (!DateOnly.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+        if (!DateOnly.TryParseExact(
+                value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
             throw new RequestValidationException(key, "Требуется дата YYYY-MM-DD.");
         return date;
     }

@@ -1,8 +1,95 @@
-// Денежные значения приходят строками, чтобы не терять точность decimal при обмене JSON.
-// Nullable-поля обозначают отсутствие базы сравнения или данных за период.
-export type Period = { readonly from: string; readonly to: string; readonly timeZone: string }
-export type Metrics = { readonly revenue: string; readonly cost: string; readonly grossProfit: string; readonly salesCount: number; readonly averageCheck: string | null; readonly margin: number | null }
-export type Manager = { readonly id: number; readonly name: string; readonly team: string; readonly position: string; readonly isActive: boolean; readonly initials: string; readonly avatarUrl: string | null }
-export type Dashboard = { readonly period: Period; readonly currency: string; readonly rankingBy: string; readonly kpis: Metrics & { readonly bestManager: Manager | null }; readonly ranking: readonly { readonly rank: number | null; readonly manager: Manager; readonly metrics: Metrics }[]; readonly series: readonly { readonly date: string; readonly revenue: string; readonly grossProfit: string; readonly salesCount: number }[]; readonly categories: readonly { readonly id: number; readonly name: string; readonly revenue: string; readonly grossProfit: string; readonly salesCount: number; readonly quantity: number }[]; readonly topProducts: readonly { readonly id: number; readonly name: string; readonly categoryId: number; readonly revenue: string; readonly grossProfit: string; readonly salesCount: number; readonly quantity: number }[]; readonly comparison: { readonly metrics: Metrics; readonly change: { readonly revenuePercent: number | null; readonly grossProfitPercent: number | null; readonly salesCountPercent: number | null; readonly averageCheckPercent: number | null; readonly marginPoints: number | null } } }
-export type Sale = { readonly id: number; readonly soldAt: string; readonly manager: Manager; readonly customer: { readonly name: string; readonly company: string; readonly segment: string }; readonly status: string; readonly includedInKpis: boolean; readonly amount: string; readonly grossProfit: string; readonly items: readonly { readonly productName: string; readonly quantity: number; readonly unitPrice: string; readonly unitCost: string }[] }
+// Денежные значения приходят строками.
+// при обмене JSON.
+// Nullable-поля обозначают отсутствие данных за период.
+export type Period = {
+  readonly from: string
+  readonly to: string
+  readonly timeZone: string
+}
+
+export type Metrics = {
+  readonly revenue: string
+  readonly cost: string
+  readonly grossProfit: string
+  readonly salesCount: number
+  readonly averageCheck: string | null
+  readonly margin: number | null
+}
+
+export type Manager = {
+  readonly id: number
+  readonly name: string
+  readonly team: string
+  readonly position: string
+  readonly isActive: boolean
+  readonly initials: string
+  readonly avatarUrl: string | null
+}
+
+export type Dashboard = {
+  readonly period: Period
+  readonly currency: string
+  readonly rankingBy: string
+  readonly kpis: Metrics & { readonly bestManager: Manager | null }
+  readonly ranking: readonly {
+    readonly rank: number | null
+    readonly manager: Manager
+    readonly metrics: Metrics
+  }[]
+  readonly series: readonly {
+    readonly date: string
+    readonly revenue: string
+    readonly grossProfit: string
+    readonly salesCount: number
+  }[]
+  readonly categories: readonly {
+    readonly id: number
+    readonly name: string
+    readonly revenue: string
+    readonly grossProfit: string
+    readonly salesCount: number
+    readonly quantity: number
+  }[]
+  readonly topProducts: readonly {
+    readonly id: number
+    readonly name: string
+    readonly categoryId: number
+    readonly revenue: string
+    readonly grossProfit: string
+    readonly salesCount: number
+    readonly quantity: number
+  }[]
+  readonly comparison: {
+    readonly metrics: Metrics
+    readonly change: {
+      readonly revenuePercent: number | null
+      readonly grossProfitPercent: number | null
+      readonly salesCountPercent: number | null
+      readonly averageCheckPercent: number | null
+      readonly marginPoints: number | null
+    }
+  }
+}
+
+export type Sale = {
+  readonly id: number
+  readonly soldAt: string
+  readonly manager: Manager
+  readonly customer: {
+    readonly name: string
+    readonly company: string
+    readonly segment: string
+  }
+  readonly status: string
+  readonly includedInKpis: boolean
+  readonly amount: string
+  readonly grossProfit: string
+  readonly items: readonly {
+    readonly productName: string
+    readonly quantity: number
+    readonly unitPrice: string
+    readonly unitCost: string
+  }[]
+}
+
 export type SalesResponse = { readonly items: readonly Sale[] }

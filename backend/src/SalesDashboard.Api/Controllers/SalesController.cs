@@ -13,11 +13,17 @@ public sealed class SalesController(ISalesService sales, TimeProvider clock) : C
 {
     /// <summary>Возвращает продажи за выбранный период.</summary>
     [HttpGet]
-    public Task<SalesDto> GetAsync([FromQuery] string? from, [FromQuery] string? to, [FromQuery] string? preset, [FromQuery] string? limit, CancellationToken cancellationToken)
+    public Task<SalesDto> GetAsync(
+        [FromQuery] string? from,
+        [FromQuery] string? to,
+        [FromQuery] string? preset,
+        [FromQuery] string? limit,
+        CancellationToken cancellationToken)
     {
         var parsedLimit = 20;
         if (limit is not null && !int.TryParse(limit, NumberStyles.None, CultureInfo.InvariantCulture, out parsedLimit))
             throw new RequestValidationException("limit", "Требуется целое число от 1 до 100.");
-        return sales.GetAsync(DateRange.Parse(from, to, preset, clock), parsedLimit, cancellationToken);
+        return sales.GetAsync(
+            DateRange.Parse(from, to, preset, clock), parsedLimit, cancellationToken);
     }
 }

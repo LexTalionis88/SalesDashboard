@@ -17,7 +17,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -30,7 +32,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
                     Company = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
                     Segment = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false)
@@ -45,7 +49,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
                     Team = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
                     Position = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
@@ -63,7 +69,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Version = table.Column<int>(type: "integer", nullable: false),
                     RandomSeed = table.Column<int>(type: "integer", nullable: false),
                     AnchorDate = table.Column<DateOnly>(type: "date", nullable: false)
@@ -78,7 +86,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
                     Sku = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false)
@@ -99,7 +109,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ManagerId = table.Column<int>(type: "integer", nullable: false),
                     CustomerId = table.Column<int>(type: "integer", nullable: false),
                     SoldAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -128,7 +140,9 @@ namespace SalesDashboard.DataAccess.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SaleId = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),

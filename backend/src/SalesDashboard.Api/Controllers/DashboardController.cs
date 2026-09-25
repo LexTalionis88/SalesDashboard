@@ -10,8 +10,16 @@ namespace SalesDashboard.Api.Controllers;
 [Route("api/dashboard")]
 public sealed class DashboardController(IAnalyticsService analytics, TimeProvider clock) : ControllerBase
 {
-    /// <summary>Возвращает агрегаты аналитики за выбранный период.</summary>
+    /// <summary>
+    /// Возвращает агрегаты аналитики за выбранный период.
+    /// </summary>
     [HttpGet]
-    public Task<DashboardDto> GetAsync([FromQuery] string? from, [FromQuery] string? to, [FromQuery] string? preset, [FromQuery] string? rankingBy, CancellationToken cancellationToken)
-        => analytics.GetAsync(DateRange.Parse(from, to, preset, clock), rankingBy ?? "grossProfit", cancellationToken);
+    public Task<DashboardDto> GetAsync(
+        [FromQuery] string? from,
+        [FromQuery] string? to,
+        [FromQuery] string? preset,
+        [FromQuery] string? rankingBy,
+        CancellationToken cancellationToken)
+        => analytics.GetAsync(
+            DateRange.Parse(from, to, preset, clock), rankingBy ?? "grossProfit", cancellationToken);
 }

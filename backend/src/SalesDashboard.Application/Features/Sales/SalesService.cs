@@ -35,23 +35,58 @@ internal sealed class SalesService(SalesDbContext db) : ISalesService
             .OrderByDescending(s => s.SoldAt).ThenByDescending(s => s.Id).Take(limit)
             .Select(s => new
             {
-                s.Id, s.SoldAt, s.Status,
-                Manager = new ManagerDto(s.Manager.Id, s.Manager.Name, s.Manager.Team, s.Manager.Position, s.Manager.IsActive, s.Manager.Initials, s.Manager.AvatarUrl),
+                s.Id,
+                s.SoldAt,
+                s.Status,
+                Manager = new ManagerDto(
+                    s.Manager.Id, s.Manager.Name, s.Manager.Team, s.Manager.Position,
+                    s.Manager.IsActive, s.Manager.Initials, s.Manager.AvatarUrl),
                 Customer = new CustomerDto(s.Customer.Id, s.Customer.Name, s.Customer.Company, s.Customer.Segment),
-                Amount = s.Items.Sum(i => i.Quantity * i.UnitPrice), Profit = s.Items.Sum(i => i.Quantity * (i.UnitPrice - i.UnitCost)),
-                Items = s.Items.OrderBy(i => i.Id).Select(i => new { i.ProductId, Name = i.Product.Name, i.Quantity, i.UnitPrice, i.UnitCost }).ToArray()
+                Amount = s.Items.Sum(i => i.Quantity * i.UnitPrice),
+                Profit = s.Items.Sum(i => i.Quantity * (i.UnitPrice - i.UnitCost)),
+                Items = s.Items
+                    .OrderBy(i => i.Id)
+                    .Select(i => new
+                    {
+                        i.ProductId,
+                        Name = i.Product.Name,
+                        i.Quantity,
+                        i.UnitPrice,
+                        i.UnitCost
+                    })
+                    .ToArray()
             }).ToListAsync(ct);
-        return sales.Select(s => new SalesRow(s.Id, s.SoldAt, s.Status, s.Manager, s.Customer, s.Amount, s.Profit, s.Items.Select(i => new SaleItemRow(i.ProductId, i.Name, i.Quantity, i.UnitPrice, i.UnitCost)).ToArray())).ToArray();
+        return sales
+            .Select(s => new SalesRow(
+                s.Id, s.SoldAt, s.Status, s.Manager, s.Customer, s.Amount, s.Profit,
+                s.Items.Select(i => new SaleItemRow(
+                    i.ProductId, i.Name, i.Quantity, i.UnitPrice, i.UnitCost)).ToArray()))
+            .ToArray();
     }
 
     internal static SalesDto BuildSalesDto(DateRange range, int limit, IEnumerable<SalesRow> rows)
     {
-        return new SalesDto(PeriodDto.FromRange(range), "RUB", limit, rows.Select(s => new SaleDto(s.Id, s.SoldAt, s.Manager, s.Customer,
-            s.Status.ToString(), s.Status == SaleStatus.Paid, Money.Format(s.Amount), Money.Format(s.Profit),
-            s.Items.Select(i => new SaleItemDto(i.ProductId, i.Name, i.Quantity, Money.Format(i.UnitPrice), Money.Format(i.UnitCost))).ToArray())).ToArray());
+        return new SalesDto(
+            PeriodDto.FromRange(range),
+            "RUB",
+            limit,
+            rows.Select(s => new SaleDto(
+                s.Id,
+                s.SoldAt,
+                s.Manager,
+                s.Customer,
+                s.Status.ToString(),
+                s.Status == SaleStatus.Paid,
+                Money.Format(s.Amount),
+                Money.Format(s.Profit),
+                s.Items.Select(i => new SaleItemDto(
+                    i.ProductId, i.Name, i.Quantity,
+                    Money.Format(i.UnitPrice), Money.Format(i.UnitCost))).ToArray())).ToArray());
     }
 
-    internal sealed record SalesRow(int Id, DateTime SoldAt, SaleStatus Status, ManagerDto Manager, CustomerDto Customer, decimal Amount, decimal Profit, SaleItemRow[] Items);
+    internal sealed record SalesRow(
+        int Id, DateTime SoldAt, SaleStatus Status, ManagerDto Manager, CustomerDto Customer,
+        decimal Amount, decimal Profit, SaleItemRow[] Items);
     internal sealed record SaleItemRow(int ProductId, string Name, int Quantity, decimal UnitPrice, decimal UnitCost);
 
 }

@@ -52,7 +52,10 @@ public sealed class AnalyticsTests
     private SalesDbContext Db() => new(new DbContextOptionsBuilder<SalesDbContext>().UseNpgsql(postgres.GetConnectionString()).Options);
     private static Sale Sale(int manager, DateTime date, SaleStatus status, params (int Product, int Quantity, decimal Price, decimal Cost)[] items) => new()
     {
-        ManagerId = manager, CustomerId = 1, SoldAt = date, Status = status,
+        ManagerId = manager,
+        CustomerId = 1,
+        SoldAt = date,
+        Status = status,
         Items = items.Select(i => new SaleItem { ProductId = i.Product, Quantity = i.Quantity, UnitPrice = i.Price, UnitCost = i.Cost }).ToList()
     };
 

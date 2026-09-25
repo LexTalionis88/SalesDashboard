@@ -39,3 +39,5 @@
 - 2026-09-25: BusinessRulesTests разделён на AnalyticsServiceTests, SalesServiceTests, DateRangeTests и SeedGeneratorTests; добавлен общий FixedClock.
 
 - 2026-09-25: тесты разнесены по сборкам SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests; старый объединённый тестовый проект удалён из solution.
+
+- 2026-09-25: проверены каталоги backend без bin/obj; удалены пустые остаточные папки API Domain, Abstractions, Data и Features после выноса слоёв.

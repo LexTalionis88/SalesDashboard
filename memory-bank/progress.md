@@ -38,3 +38,5 @@ Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂР
 - Unit-тесты структурированы по ответственности: отдельные классы для AnalyticsService и SalesService, а также для DateRange и SeedGenerator.
 
 - Unit, integration и e2e тесты разнесены в отдельные сборки SalesDashboard.UnitTests, SalesDashboard.IntegrationTests и SalesDashboard.E2ETests.
+
+- Очищены пустые каталоги API, оставшиеся после разделения Application/DataAccess и переноса тестов.

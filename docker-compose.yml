@@ -23,6 +23,10 @@ services:
       ConnectionStrings__Sales: Host=postgres;Database=sales_dashboard;Username=sales;Password=sales_local
       Seed__AnchorDate: ${SEED_ANCHOR_DATE:-}
       DOTNET_DiagnosticPorts: /diag/port.sock,suspend=n
+      OTEL_SERVICE_NAME: sales-dashboard-api
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      OTEL_PROPAGATORS: tracecontext,baggage
     ports:
       - "127.0.0.1:8080:8080"
     volumes:
@@ -30,6 +34,15 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      jaeger:
+        condition: service_started
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "127.0.0.1:16686:16686"
+      - "127.0.0.1:4317:4317"
   dotnet-monitor:
     image: mcr.microsoft.com/dotnet/monitor:10
     command: ["collect", "--no-auth"]

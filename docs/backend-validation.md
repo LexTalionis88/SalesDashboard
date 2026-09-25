@@ -19,6 +19,7 @@
 - `GET http://localhost:3000/` — HTTP 200.
 - `GET http://localhost:3000/api/dashboard?from=2026-09-01&to=2026-09-25&rankingBy=grossProfit` — данные dashboard получены через Nginx proxy.
 - `GET http://localhost:3000/api/sales?from=2026-09-01&to=2026-09-25&limit=20` — 20 записей получены через Nginx proxy.
+- Jaeger `http://localhost:16686/api/services` показывает `sales-dashboard-api`; после запросов доступны traces со span HTTP и EF Core/SQL.
 
 ## Ограничения
 

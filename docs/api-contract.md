@@ -92,6 +92,6 @@
 }
 ```
 
-Непредвиденные исключения → 500 ProblemDetails с traceId, без stack trace/SQL. Поле type может добавляться платформой. Неизвестный маршрут → 404.
+Непредвиденные исключения → 500 ProblemDetails с OpenTelemetry traceId (или HTTP TraceIdentifier, если tracing отключён), без stack trace/SQL. Поле type может добавляться платформой. Неизвестный маршрут → 404.
 
 `GET /api/health/ready`: 200 `{"status":"ready"}` при доступной БД, 503 при недоступной. HTTP-сервер начинает слушать после успешных migrations/seed; ошибка инициализации завершает процесс и видна в логах.

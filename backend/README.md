@@ -61,3 +61,7 @@ dotnet ef migrations add Name --project backend/src/SalesDashboard.DataAccess --
 
 docker compose поднимает sidecar dotnet-monitor на http://localhost:52323; backend и monitor используют общий /diag/port.sock.
 
+## OpenTelemetry
+
+Backend создаёт traces для ASP.NET Core, HttpClient и EF Core. В Compose OTLP/gRPC экспорт направлен в Jaeger на `http://jaeger:4317`, UI доступен на `http://localhost:16686`. Вне Compose экспорт включается переменной `OTEL_EXPORTER_OTLP_ENDPOINT`.
+

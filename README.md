@@ -14,8 +14,9 @@ docker compose up --build
 - Readiness: http://localhost:8080/api/health/ready
 - OpenAPI: http://localhost:8080/openapi/v1.json
 - dotnet-monitor: http://localhost:52323
+- Jaeger UI: http://localhost:16686
 
-Backend применяет миграции и создаёт seed при первом запуске. Frontend проксирует `/api` через Nginx, поэтому браузеру нужен один origin.
+Backend применяет миграции и создаёт seed при первом запуске. Frontend проксирует `/api` через Nginx, поэтому браузеру нужен один origin. Backend экспортирует traces по OTLP/gRPC в Jaeger; каждый HTTP-запрос и EF Core запрос получают связанные spans.
 
 ## Возможности
 

@@ -1,6 +1,6 @@
 # Архитектура
 
-**Статус: backend v1 реализован на .NET 10; frontend пока каркас.** EF Core migrations, PostgreSQL, seed, серверные агрегаты и API работают. DTO и OpenAPI описаны в api-contract.md; тесты на NUnit. Полный единый origin через frontend proxy предстоит подключить вместе с UI.
+**Статус: backend и frontend v1 реализованы на .NET 10 и React.** EF Core migrations, PostgreSQL, seed, серверные агрегаты и API работают. DTO и OpenAPI описаны в api-contract.md; тесты на NUnit. Frontend proxy и OpenTelemetry/Jaeger подключены в Compose.
 
 ## Контекст и границы
 
@@ -17,6 +17,7 @@ flowchart LR
     Sales --> EF
     EF --> DB[(PostgreSQL)]
     Startup[Startup: migrations + seed] --> DB
+    Api -->|OTLP/gRPC traces| Jaeger[Jaeger]
 ```
 
 Принят один origin через frontend proxy: он отдаёт статические файлы и проксирует `/api`. БД доступна только внутри Compose network. Redis, брокер, CQRS-фреймворк, универсальный Repository и отдельные микросервисы не нужны для данного объёма. При необходимости raw SQL допускается ТЗ, но вводится только с объяснением конкретного запроса.
@@ -81,7 +82,11 @@ Revenue/GrossProfit не хранить как независимые измен
 
 ## Frontend и UX
 
-`app` собирает страницу и провайдеры, `features/dashboard` содержит блоки и управление периодом/рейтингом, `shared/api` — контракт и HTTP, `shared/ui` — общие элементы. Принята основа: Vite, TanStack Query, Recharts; версии и конкретный UI-набор выбрать при реализации (D-10). Redux/Zustand не обязательны для одной страницы.
+`app` собирает страницу и провайдеры, `features/dashboard` содержит блоки и управление периодом/рейтингом, `shared/api` — контракт и HTTP, `shared/ui` — общие элементы. Принята основа: Vite, TanStack Query, Recharts; версии закреплены lock-файлами. Redux/Zustand не обязательны для одной страницы.
+
+## Observability
+
+API регистрирует OpenTelemetry tracing с ASP.NET Core, HttpClient и EF Core instrumentation. При наличии `OTEL_EXPORTER_OTLP_ENDPOINT` подключается OTLP exporter; Compose задаёт Jaeger как приёмник и сохраняет W3C `tracecontext,baggage`. UI Jaeger опубликован на `localhost:16686`, OTLP/gRPC — на `localhost:4317`.
 
 Состояния: initial loading, смена периода, ошибка с повторной попыткой, пустой период, пустой отдельный блок. Если сохраняются предыдущие данные на время запроса, они явно помечаются загрузкой; нельзя выдавать их за данные нового периода. Ошибка истории может отображаться в таблице при сохранении доступной аналитики. Достаточны аккуратные hover/transition/skeleton; reduced motion — предлагаемое улучшение, не отдельное требование ТЗ.
 
@@ -91,9 +96,9 @@ Revenue/GrossProfit не хранить как независимые измен
 2. Backend дожидается БД, применяет EF migrations.
 3. Seed при первом запуске создаётся транзакционно; признак завершения устанавливается после успешного наполнения. Повторный старт не дублирует данные; при сбое транзакция откатывается.
 4. Backend отмечается ready только после успешных миграций/seed. Ошибка инициализации должна быть видимой в логах.
-5. Frontend отдаёт сборку и проксирует API. Пользователь открывает документированный URL.
+5. Frontend отдаёт сборку и проксирует API. Пользователь открывает документированный URL; Jaeger UI доступен отдельно для диагностики.
 
-Принят один экземпляр backend, поэтому отдельный migrator-сервис не требуется. Масштабирование и конкурентная миграция за пределами этого решения. `docker-compose.yml` запускает backend и PostgreSQL с автоматическими migrations/seed. Frontend-сервис добавится на этапе UI. Повторный старт проверяется backend e2e.
+Принят один экземпляр backend, поэтому отдельный migrator-сервис не требуется. Масштабирование и конкурентная миграция за пределами этого решения. `docker-compose.yml` запускает backend, PostgreSQL, frontend, Jaeger и dotnet-monitor; backend выполняет migrations/seed. Повторный старт проверяется backend e2e.
 
 ## Проверяемость и риски
 

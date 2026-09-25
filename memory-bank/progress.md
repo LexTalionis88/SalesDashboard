@@ -26,3 +26,5 @@ Frontend, РІРёР·СѓР°Р»СЊРЅС‹Р№ dashboard, UI-СЃРѕСЃС‚РѕСЏРЅРёСЏ, Р±СЂР°СѓР·РµСЂР
 - Бизнес-логика вынесена в отдельную сборку SalesDashboard.Application; интерфейсы находятся в Application/Abstractions/Services, реализации и DTO — в Application/Features.
 
 - Minimal API заменён на контроллеры DashboardController, SalesController и HealthController; проверка готовности использует IDatabaseReadiness.
+
+- AnalyticsService.GetAsync декомпозирован на отдельные этапы загрузки и сборки результата; вынесены тестируемые методы валидации и формирования DTO.

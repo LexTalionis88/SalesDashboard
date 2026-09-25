@@ -27,3 +27,5 @@
 - 2026-09-25: в Compose добавлен sidecar mcr.microsoft.com/dotnet/monitor:10; backend и monitor используют общий diagnostic socket /diag/port.sock, endpoint monitor опубликован на localhost:52323.
 
 - 2026-09-25: проверена кодировка русских строк и XML-комментариев; исправлены mojibake в комментариях и сообщениях валидации сервисов Analytics/Sales.
+
+- 2026-09-25: AnalyticsService.GetAsync разделён на валидацию, загрузку менеджеров, серию, категории, продукты и сборку DashboardDto; чистые этапы ValidateRanking и BuildDashboard доступны для unit-тестов.

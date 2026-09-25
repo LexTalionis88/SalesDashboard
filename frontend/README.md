@@ -21,4 +21,4 @@ Dashboard доступен на `http://localhost:3000`. Nginx в frontend-ко�
 
 Реализованы выбор периода, сортировка рейтинга, KPI, динамика, лидер периода, категории, товары и история продаж. Запросы отменяются при смене параметров; ошибки и пустые выборки показываются отдельно для аналитики и истории.
 
-Браузерные E2E находятся в `backend/tests/SalesDashboard.E2ETests/E2E/FrontendJourneyTests.cs`. После установки Chromium их можно запустить командой `dotnet test backend/SalesDashboard.slnx --filter BrowserE2E`; адрес frontend при необходимости переопределяется переменной `FRONTEND_E2E_URL`.
+Браузерные E2E находятся в `backend/tests/SalesDashboard.E2ETests/E2E/FrontendJourneyTests.cs`. После установки Chromium их можно запустить командой `dotnet test backend/tests/SalesDashboard.E2ETests/SalesDashboard.E2ETests.csproj --filter TestCategory=BrowserE2E`; адрес frontend при необходимости переопределяется переменной `FRONTEND_E2E_URL`.

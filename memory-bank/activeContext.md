@@ -10,6 +10,6 @@ OpenTelemetry tracing подключён в API: ASP.NET Core, HttpClient и EF 
 
 Unit/integration/backend e2e и браузерные frontend e2e написаны на NUnit. Integration — PostgreSQL Testcontainers, backend e2e — отдельный Kestrel и PostgreSQL, browser e2e — Playwright for .NET против Compose frontend. Фактические проверки и границы — progress.md. Для API есть docs/api-contract.md и endpoint /openapi/v1.json.
 
-Браузерные E2E реализованы в `FrontendJourneyTests`: загрузка dashboard, смена периода/рейтинга и пустой период. Chromium установлен локально, три сценария проходят; визуальный интерактивный просмотр через встроенный браузер остаётся отдельным ручным шагом.
+Браузерные E2E реализованы в `FrontendJourneyTests`: загрузка dashboard, смена периода/рейтинга, пустой период, все пресеты, валидация дат, loading и повтор после ошибки API. Chromium установлен локально, 7 сценариев проходят; визуальный интерактивный просмотр через встроенный браузер остаётся отдельным ручным шагом.
 
 Работа ведётся в main, коммиты на русском языке. Удалённого репозитория нет. Фактический общий timebox не измерялся; не выдавать оценку за учёт времени.

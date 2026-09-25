@@ -16,7 +16,7 @@
 
 - Unit: 25/25.
 - Integration: 12/12.
-- Backend и frontend E2E: 4/4.
+- Backend и frontend E2E: 8/8 (backend 1/1, browser 7/7).
 - `npm run build`, `docker compose build` и Compose smoke-test проходят.
 - Jaeger получает traces сервиса `sales-dashboard-api`.
 

@@ -23,3 +23,5 @@
 - 2026-09-25: бизнес-логика вынесена в SalesDashboard.Application; зависимости направлены Api -> Application -> DataAccess.
 
 - 2026-09-25: HTTP endpoints переведены с Minimal API на контроллеры DashboardController, SalesController и HealthController; readiness предоставляется через IDatabaseReadiness.
+
+- 2026-09-25: в Compose добавлен sidecar mcr.microsoft.com/dotnet/monitor:10; backend и monitor используют общий diagnostic socket /diag/port.sock, endpoint monitor опубликован на localhost:52323.

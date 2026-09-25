@@ -20,3 +20,5 @@ C#, .NET 8+, ASP.NET Core, EF Core, REST, async/await; React + TypeScript; Postg
 Р‘СѓРґСѓС‰Р°СЏ РєРѕРјР°РЅРґР° Р·Р°РїСѓСЃРєР° РїРѕ РўР—: `docker compose up --build`. РџСЂРѕРІРµСЂРєР° backend-Р·Р°РїСѓСЃРєР° РѕРїРёСЃР°РЅР° РІ docs/backend-validation.md; РїРѕР»РЅС‹Р№ UI РµС‰С‘ РЅРµ СЂРµР°Р»РёР·РѕРІР°РЅ. РђСЂС…РёС‚РµРєС‚СѓСЂРЅС‹Рµ РїСЂРµРґР»РѕР¶РµРЅРёСЏ вЂ” `docs/architecture.md`.
 
 - Архитектура backend: SalesDashboard.Api -> SalesDashboard.Application -> SalesDashboard.DataAccess; бизнес-логика изолирована в Application.
+
+- Compose включает sidecar dotnet-monitor:10 для локальной диагностики через общий /diag/port.sock; HTTP endpoint monitor — localhost:52323.

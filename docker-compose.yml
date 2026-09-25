@@ -22,10 +22,27 @@ services:
     environment:
       ConnectionStrings__Sales: Host=postgres;Database=sales_dashboard;Username=sales;Password=sales_local
       Seed__AnchorDate: ${SEED_ANCHOR_DATE:-}
+      DOTNET_DiagnosticPorts: /diag/port.sock,suspend=n
     ports:
       - "127.0.0.1:8080:8080"
+    volumes:
+      - diagnostics:/diag
     depends_on:
       postgres:
         condition: service_healthy
+  dotnet-monitor:
+    image: mcr.microsoft.com/dotnet/monitor:10
+    command: ["collect", "--no-auth"]
+    environment:
+      DOTNETMONITOR_DiagnosticPort__ConnectionMode: Listen
+      DOTNETMONITOR_DiagnosticPort__EndpointName: /diag/port.sock
+      DOTNETMONITOR_Urls: http://+:52323
+    ports:
+      - "127.0.0.1:52323:52323"
+    volumes:
+      - diagnostics:/diag
+    depends_on:
+      - backend
 volumes:
   sales-data:
+  diagnostics:

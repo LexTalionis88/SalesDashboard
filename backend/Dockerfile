@@ -10,8 +10,10 @@ RUN dotnet publish backend/src/SalesDashboard.Api -c Release --no-restore -o /ap
 FROM mcr.microsoft.com/dotnet/aspnet:10.0.12
 WORKDIR /app
 COPY --from=build /app .
+RUN mkdir -p /diag && chown $APP_UID /diag
 USER $APP_UID
 ENV ASPNETCORE_HTTP_PORTS=8080
+ENV DOTNET_DiagnosticPorts=/diag/port.sock,suspend=n
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "SalesDashboard.Api.dll"]
 

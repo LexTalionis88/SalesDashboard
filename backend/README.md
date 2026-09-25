@@ -55,3 +55,8 @@ dotnet ef migrations add Name --project backend/src/SalesDashboard.DataAccess --
 Сервисные контракты находятся в `src/SalesDashboard.Api/Abstractions/Services`; реализации — в `Features` и `Data/Seed`. Конкретные реализации и доменные сущности имеют внутреннюю область видимости.
 
 Контракт: [api-contract.md](../docs/api-contract.md). Правила: [business-rules.md](../docs/business-rules.md).
+
+
+## dotnet monitor
+
+docker compose ��������� sidecar dotnet-monitor �� http://localhost:52323; backend � monitor ���������� ����� /diag/port.sock.

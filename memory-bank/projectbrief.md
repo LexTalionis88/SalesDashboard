@@ -2,12 +2,10 @@
 
 Обновлено: 2026-09-25.
 
-Sales Performance Dashboard — тестовое задание DJI-Market.ru на Middle Full-Stack / AI-Native Developer. Цель будущей реализации: заполненный desktop dashboard аналитики менеджеров, запускаемый после клонирования одной командой `docker compose up --build`.
+Sales Performance Dashboard — тестовое задание DJI-Market.ru. Цель проекта — desktop dashboard аналитики менеджеров, запускаемый после клонирования командой `docker compose up --build`.
 
-Источник: `Тестовое_задание_Sales_Performance_Dashboard.pdf`, 11 страниц. Стек задан: React + TypeScript, C#/.NET 8+/ASP.NET Core/EF Core, PostgreSQL, Docker Compose. Ориентир — 8 часов фактической работы. Авторизация не требуется.
+Источник требований: `Тестовое_задание_Sales_Performance_Dashboard.pdf`, 11 страниц. Реализованный стек: React + TypeScript, C#/.NET 10, ASP.NET Core, EF Core, PostgreSQL, Docker Compose, OpenTelemetry и Jaeger.
 
-Текущий запрос пользователя: изучить ТЗ, создать структуру каталогов/файлов и memory bank, выделить функциональные/нефункциональные требования, архитектуру, противоречия и необходимые решения. Этот подготовительный объём выполнен; реализация приложения не входила в текущий запрос.
+В текущий результат входят backend API, frontend dashboard, автоматический seed, server-side расчёты, состояния UI, NUnit unit/integration/backend E2E и Playwright browser E2E.
 
-Для приложения обязательны KPI, период, два режима рейтинга, динамика, категории/top продуктов, последние продажи, серверные вычисления, автоматический seed, состояния UI и значимые тесты. Точная трассировка — в `docs/requirements/`.
-
-Вне scope: login/JWT/OAuth/пользователи/permissions, mobile, admin panel, Kubernetes, production cloud deployment, сложная распределённая система. Финальная поставка по ТЗ — репозиторий или архив с рабочим приложением, README, AI_PROMPTS и AI_NOTES.
+Вне scope: login/JWT/OAuth, пользователи и permissions, mobile layout, admin panel, Kubernetes, production cloud deployment и сложная распределённая архитектура.

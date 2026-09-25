@@ -47,6 +47,7 @@ Integration и backend E2E используют Testcontainers с PostgreSQL и 
 
 - [Требования](docs/requirements/functional.md), [архитектура](docs/architecture.md), [бизнес-правила](docs/business-rules.md), [API-контракт](docs/api-contract.md).
 - [Решения](docs/decisions/open-decisions.md), [план проверки](docs/verification-plan.md), [memory bank](memory-bank/README.md).
+- [Руководство пользователя](docs/user-guide.md) — отдельная инструкция для работы с dashboard.
 - [Frontend](frontend/README.md), [backend](backend/README.md), [история запросов](AI_PROMPTS.md).
 
 Авторизация, admin panel и production deployment не входят в текущую версию. В строках рейтинга нет сравнения с прошлым периодом; общие KPI сравниваются.
